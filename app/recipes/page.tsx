@@ -1,5 +1,6 @@
 import { Fragment } from "react"
 import { getAllRecipes, Recipe } from "@/lib/queries/recipes"
+import Link from "next/link"
 
 export default async function Page() {
   const recipes: Recipe[] = await getAllRecipes()
@@ -8,8 +9,7 @@ export default async function Page() {
     <div>
       {recipes.map((recipe: Recipe) => (
         <Fragment key={recipe.sys.id}>
-          <h2 key={recipe.sys.id}>{recipe.title}</h2>
-          <p>{recipe.summary}</p>
+          <Link href={`/recipes/${recipe.slug}`}>{recipe.title}</Link>
         </Fragment>
       ))}
     </div>

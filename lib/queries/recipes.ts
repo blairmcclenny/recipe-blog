@@ -30,8 +30,26 @@ export async function getAllRecipes(limit = 10, isDraftMode = false) {
           ${RECIPE_GRAPHQL_FIELDS}
         }
       }
-    }`
+    }`,
+    isDraftMode
   )
 
   return recipes?.data?.recipeCollection?.items
+}
+
+export async function getRecipeBySlug(slug: string, isDraftMode = false) {
+  const recipe = await fetchGraphQL(
+    `query {
+        recipeCollection(where:{slug: "${slug}"}
+        limit: 1
+        preview: ${isDraftMode ? "true" : "false"}
+      ) {
+          items {
+            ${RECIPE_GRAPHQL_FIELDS}
+          }
+        }
+      }`,
+    isDraftMode
+  )
+  return recipe?.data?.recipeCollection?.items[0]
 }
