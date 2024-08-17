@@ -51,5 +51,6 @@ export async function getRecipeBySlug(slug: string, isDraftMode = false) {
       }`,
     isDraftMode
   )
+  
   return recipe?.data?.recipeCollection?.items[0]
 }
