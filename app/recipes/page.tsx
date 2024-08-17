@@ -1,6 +1,6 @@
 import { Fragment } from "react"
-import { getAllRecipes, Recipe } from "@/lib/queries/recipes"
 import Link from "next/link"
+import { getAllRecipes, Recipe } from "@/lib/queries/recipes"
 
 export default async function Page() {
   const recipes: Recipe[] = await getAllRecipes()
