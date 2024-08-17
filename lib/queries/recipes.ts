@@ -18,10 +18,14 @@ const RECIPE_GRAPHQL_FIELDS = `
   summary
 `
 
-export async function getAllRecipes() {
+export async function getAllRecipes(limit = 10, isDraftMode = false) {
   const recipes = await fetchGraphQL(
     `query {
-      recipeCollection {
+      recipeCollection(
+        where: { slug_exists: true }
+        limit: ${limit}
+        preview: ${isDraftMode ? "true" : "false"}
+      ) {
         items {
           ${RECIPE_GRAPHQL_FIELDS}
         }

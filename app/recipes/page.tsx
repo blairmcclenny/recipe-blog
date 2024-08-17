@@ -1,3 +1,4 @@
+import { Fragment } from "react"
 import { getAllRecipes, Recipe } from "@/lib/queries/recipes"
 
 export default async function Page() {
@@ -6,7 +7,10 @@ export default async function Page() {
   return (
     <div>
       {recipes.map((recipe: Recipe) => (
-        <h2 key={recipe.sys.id}>{recipe.title}</h2>
+        <Fragment key={recipe.sys.id}>
+          <h2 key={recipe.sys.id}>{recipe.title}</h2>
+          <p>{recipe.summary}</p>
+        </Fragment>
       ))}
     </div>
   )
