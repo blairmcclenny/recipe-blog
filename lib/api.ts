@@ -15,6 +15,7 @@ export async function fetchGraphQL(
         }`,
       },
       body: JSON.stringify({ query }),
+      next: { tags: ["recipes"] },
     }
   ).then((response) => response.json());
 }
