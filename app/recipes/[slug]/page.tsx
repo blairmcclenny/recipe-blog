@@ -1,4 +1,5 @@
 import { getAllRecipes, getRecipeBySlug, Recipe } from "@/lib/queries/recipes"
+import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
 
 export async function generateStaticParams() {
@@ -10,7 +11,8 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const recipe: Recipe = await getRecipeBySlug(params.slug)
+  const { isEnabled } = draftMode()
+  const recipe: Recipe = await getRecipeBySlug(params.slug, isEnabled)
 
   if (!recipe) {
     notFound()

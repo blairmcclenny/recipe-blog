@@ -1,9 +1,11 @@
 import { Fragment } from "react"
 import Link from "next/link"
 import { getAllRecipes, Recipe } from "@/lib/queries/recipes"
+import { draftMode } from "next/headers"
 
 export default async function Page() {
-  const recipes: Recipe[] = await getAllRecipes()
+  const { isEnabled } = draftMode()
+  const recipes: Recipe[] = await getAllRecipes(10, isEnabled)
 
   return (
     <div>
