@@ -1,7 +1,7 @@
-import { Fragment } from "react"
 import Link from "next/link"
 import { getAllRecipes, Recipe } from "@/lib/queries/recipes"
 import { draftMode } from "next/headers"
+import { TypographyLI, TypographyUL } from "@/components/typography"
 
 export default async function Page() {
   const { isEnabled } = draftMode()
@@ -9,11 +9,13 @@ export default async function Page() {
 
   return (
     <div>
-      {recipes.map((recipe: Recipe) => (
-        <Fragment key={recipe.sys.id}>
-          <Link href={`/recipes/${recipe.slug}`}>{recipe.title}</Link>
-        </Fragment>
-      ))}
+      <TypographyUL>
+        {recipes.map((recipe: Recipe) => (
+          <TypographyLI key={recipe.sys.id}>
+            <Link href={`/recipes/${recipe.slug}`}>{recipe.title}</Link>
+          </TypographyLI>
+        ))}
+      </TypographyUL>
     </div>
   )
 }
