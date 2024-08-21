@@ -43,7 +43,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <div className="min-h-dvh grid grid-rows-[auto_1fr_auto]">
+            <header />
+            <main>{children}</main>
+            <footer />
+          </div>
         </ThemeProvider>
       </body>
     </html>
