@@ -1,6 +1,7 @@
 import { getAllRecipes, getRecipeBySlug, Recipe } from "@/lib/queries/recipes"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
+import { TypographyH1, TypographyP } from "@/components/typography"
 
 export async function generateStaticParams() {
   const recipes: Recipe[] = await getAllRecipes()
@@ -20,8 +21,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div>
-      <h1>{recipe.title}</h1>
-      <p>{recipe.summary}</p>
+      <TypographyH1>{recipe.title}</TypographyH1>
+      <TypographyP>{recipe.summary}</TypographyP>
     </div>
   )
 }
