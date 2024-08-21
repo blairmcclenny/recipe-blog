@@ -1,12 +1,21 @@
 import type { Metadata } from "next"
-import { Inter as FontSans } from "next/font/google"
+import { Open_Sans, Playfair_Display } from "next/font/google"
 import "./globals.css"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/components/themeProvider"
 
-const fontSans = FontSans({
+const playfair_display = Playfair_Display({
   subsets: ["latin"],
-  variable: "--font-sans",
+  style: ["italic"],
+  display: "swap",
+  variable: "--font-playfair-display",
+})
+
+const open_sans = Open_Sans({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-open-sans",
 })
 
 export const metadata: Metadata = {
@@ -24,7 +33,8 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background text-foreground font-sans antialiased",
-          fontSans.variable
+          playfair_display.variable,
+          open_sans.variable
         )}
       >
         <ThemeProvider
