@@ -2,6 +2,7 @@ import { getAllRecipes, getRecipeBySlug, Recipe } from "@/lib/queries/recipes"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
 import { TypographyH1, TypographyP } from "@/components/typography"
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 
 export async function generateStaticParams() {
   const recipes: Recipe[] = await getAllRecipes()
@@ -23,6 +24,20 @@ export default async function Page({ params }: { params: { slug: string } }) {
     <div>
       <TypographyH1>{recipe.title}</TypographyH1>
       <TypographyP>{recipe.summary}</TypographyP>
+      <div>
+        {recipe.date &&
+          new Date(recipe.date).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+          <br />
+          Author: {recipe.author?.name}
+          <br />
+          Category: {recipe.category?.name}
+      </div>
+      
+      <div>{documentToReactComponents(recipe.details?.json)}</div>
     </div>
   )
 }
