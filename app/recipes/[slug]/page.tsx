@@ -2,7 +2,7 @@ import { getAllRecipes, getRecipeBySlug, Recipe } from "@/lib/queries/recipes"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
 import { TypographyH1, TypographyP } from "@/components/typography"
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
+import renderRichText from "@/components/richText"
 
 export async function generateStaticParams() {
   const recipes: Recipe[] = await getAllRecipes()
@@ -37,7 +37,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           Category: {recipe.category?.name}
       </div>
       
-      <div>{documentToReactComponents(recipe.details?.json)}</div>
+      <div>{renderRichText(recipe.details?.json)}</div>
     </div>
   )
 }
