@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { submitContactForm } from "./actions"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -8,14 +7,21 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/hooks/use-toast"
 import { TypographyH1 } from "@/components/typography"
+import { useFormStatus } from "react-dom"
+
+function Submit() {
+  const { pending } = useFormStatus()
+
+  return (
+    <Button type="submit" disabled={pending}>
+      {pending ? "Sending..." : "Send Message"}
+    </Button>
+  )
+}
 
 export default function ContactForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
   async function handleSubmit(formData: FormData) {
-    setIsSubmitting(true)
     const result = await submitContactForm(formData)
-    setIsSubmitting(false)
 
     if (result.error) {
       toast({
@@ -55,9 +61,7 @@ export default function ContactForm() {
             className="min-h-[100px]"
           />
         </div>
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Sending..." : "Send Message"}
-        </Button>
+        <Submit />
       </form>
     </div>
   )
