@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { submitContactForm } from "./actions"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -11,55 +12,32 @@ import { TypographyH1 } from "@/components/typography"
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  async function handleSubmit(formData: FormData) {
     setIsSubmitting(true)
+    const result = await submitContactForm(formData)
+    setIsSubmitting(false)
 
-    const formData = new FormData(event.currentTarget)
-    const data = Object.fromEntries(formData)
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.error || "Failed to submit the form")
-      }
-
-      const result = await response.json()
-
-      toast({
-        title: "Success",
-        description: `Your message has been sent (Submission ID: ${result.submissionId}). We'll get back to you soon!`,
-      })
-
-      // Reset the form
-    //   event.currentTarget.reset()
-    } catch (error) {
-      console.error("Error submitting form:", error)
+    if (result.error) {
       toast({
         title: "Error",
-        description:
-          error instanceof Error
-            ? error.message
-            : "There was a problem submitting your form. Please try again.",
+        description: result.error,
         variant: "destructive",
       })
-    } finally {
-      setIsSubmitting(false)
+    } else {
+      toast({
+        title: "Success",
+        description: "Your message has been sent. We'll get back to you soon!",
+      })
+
+      const form = document.getElementById("contact-form") as HTMLFormElement
+      form.reset()
     }
   }
 
   return (
-    <div className="space-y-6 max-w-xl mx-auto">
-      <TypographyH1>Contact</TypographyH1>
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="max-w-xl mx-auto mt-10 space-y-6">
+      <TypographyH1>Contact Us</TypographyH1>
+      <form id="contact-form" action={handleSubmit} className="space-y-6">
         <div className="space-y-2">
           <Label htmlFor="name">Name</Label>
           <Input id="name" name="name" required />
@@ -70,7 +48,12 @@ export default function ContactForm() {
         </div>
         <div className="space-y-2">
           <Label htmlFor="message">Message</Label>
-          <Textarea id="message" name="message" required />
+          <Textarea
+            id="message"
+            name="message"
+            required
+            className="min-h-[100px]"
+          />
         </div>
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Sending..." : "Send Message"}
