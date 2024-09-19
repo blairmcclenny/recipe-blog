@@ -3,6 +3,7 @@ import { Open_Sans, Playfair_Display } from "next/font/google"
 import "./globals.css"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/components/themeProvider"
+import { Toaster } from "@/components/ui/toaster"
 
 const playfair_display = Playfair_Display({
   subsets: ["latin"],
@@ -48,6 +49,7 @@ export default function RootLayout({
             <main>{children}</main>
             <footer />
           </div>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
