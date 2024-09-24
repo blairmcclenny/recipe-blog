@@ -28,6 +28,7 @@ export async function submitContactForm(formData: FormData) {
 
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
+  // TODO: Send the form data to the server and send an email
   console.log("Form submission:", result.data)
 
   revalidatePath("/")
