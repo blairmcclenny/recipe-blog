@@ -4,6 +4,7 @@ import "./globals.css"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/components/themeProvider"
 import { Toaster } from "@/components/ui/toaster"
+import Header from "@/components/layout/header"
 
 const playfair_display = Playfair_Display({
   subsets: ["latin"],
@@ -45,7 +46,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="min-h-dvh grid grid-rows-[auto_1fr_auto]">
-            <header />
+            <Header />
             <main>{children}</main>
             <footer />
           </div>
