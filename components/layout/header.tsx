@@ -1,5 +1,10 @@
 "use client"
 
+// TODO: Use real data for the header
+// TODO: Size mobile nav to screen minus header height
+// TODO: Add transition to mobile nav
+// TODO: Add transition to mobile nav icon
+
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
@@ -7,29 +12,36 @@ import { Menu, X } from "lucide-react"
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true)
-      } else {
-        setIsScrolled(false)
+      window.scrollY > 50 ? setIsScrolled(true) : setIsScrolled(false)
+    }
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+
+      if (window.innerWidth >= 768) {
+        setIsMobileMenuOpen(false)
       }
     }
 
+    handleResize()
+
     window.addEventListener("scroll", handleScroll)
+    window.addEventListener("resize", handleResize)
 
     return () => {
       window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("resize", handleResize)
     }
   }, [])
 
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = "hidden"
-    } else {
-      document.body.style.overflow = "unset"
-    }
+    isMobileMenuOpen
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "unset")
 
     return () => {
       document.body.style.overflow = "unset"
@@ -41,7 +53,7 @@ export default function Header() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
           isScrolled
@@ -51,7 +63,7 @@ export default function Header() {
       >
         <div className="container mx-auto px-4 h-full flex items-center justify-between">
           <h1
-            className={`font-bold transition-all duration-300 ease-in-out ${
+            className={`font-serif font-extrabold transition-all duration-300 ease-in-out ${
               isScrolled ? "text-xl" : "text-3xl"
             }`}
           >
@@ -70,13 +82,15 @@ export default function Header() {
               </li>
             </ul>
           </nav>
-          <Button
-            variant="ghost"
-            className="md:hidden"
-            onClick={toggleMobileMenu}
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </Button>
+          {isMobile && (
+            <Button
+              variant="ghost"
+              className="md:hidden"
+              onClick={toggleMobileMenu}
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </Button>
+          )}
         </div>
       </header>
       {isMobileMenuOpen && (
@@ -94,17 +108,6 @@ export default function Header() {
           </nav>
         </div>
       )}
-      <main className="container mx-auto px-4 pt-32">
-        <h2 className="text-2xl font-bold mb-4">Welcome to our page</h2>
-        {[...Array(20)].map((_, i) => (
-          <p key={i} className="mb-4">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </p>
-        ))}
-      </main>
-    </div>
+    </>
   )
 }
