@@ -41,7 +41,7 @@ export default function Header() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
           isScrolled
@@ -51,7 +51,7 @@ export default function Header() {
       >
         <div className="container mx-auto px-4 h-full flex items-center justify-between">
           <h1
-            className={`font-bold transition-all duration-300 ease-in-out ${
+            className={`font-serif font-extrabold transition-all duration-300 ease-in-out ${
               isScrolled ? "text-xl" : "text-3xl"
             }`}
           >
@@ -90,21 +90,10 @@ export default function Header() {
             </Button>
             <Button variant="ghost" size="lg" onClick={toggleMobileMenu}>
               Contact
-            </Button>
+            </Button>            
           </nav>
         </div>
       )}
-      <main className="container mx-auto px-4 pt-32">
-        <h2 className="text-2xl font-bold mb-4">Welcome to our page</h2>
-        {[...Array(20)].map((_, i) => (
-          <p key={i} className="mb-4">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </p>
-        ))}
-      </main>
-    </div>
+    </>
   )
 }
