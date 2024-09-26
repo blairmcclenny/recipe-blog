@@ -10,11 +10,11 @@ import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import useBodyScrollLock from "@/hooks/useBodyLockScroll"
 import useWindowScroll from "@/hooks/useWindowScroll"
-import useIsMobile from "@/hooks/useIsMobile"
+import useMediaQuery from "@/hooks/useMediaQuery"
 
 export default function Header() {
   const isScrolled = useWindowScroll(50)
-  const isMobile = useIsMobile(768)
+  const isMobile = useMediaQuery("(max-width: 768px)")
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useBodyScrollLock(isMobileMenuOpen)
