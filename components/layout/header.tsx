@@ -8,20 +8,17 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
-import { useBodyScrollLock } from "@/hooks/useBodyLockScroll"
+import useBodyScrollLock from "@/hooks/useBodyLockScroll"
+import useWindowScroll from "@/hooks/useWindowScroll"
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const isScrolled = useWindowScroll(50)
   const [isMobile, setIsMobile] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useBodyScrollLock(isMobileMenuOpen)
 
   useEffect(() => {
-    const handleScroll = () => {
-      window.scrollY > 50 ? setIsScrolled(true) : setIsScrolled(false)
-    }
-
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768)
 
@@ -32,11 +29,9 @@ export default function Header() {
 
     handleResize()
 
-    window.addEventListener("scroll", handleScroll)
     window.addEventListener("resize", handleResize)
 
     return () => {
-      window.removeEventListener("scroll", handleScroll)
       window.removeEventListener("resize", handleResize)
     }
   }, [])
