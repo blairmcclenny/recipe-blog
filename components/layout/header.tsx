@@ -44,7 +44,7 @@ export default function Header() {
               isScrolled ? "text-xl" : "text-3xl"
             }`}
           >
-            Sticky Header
+            Lorem Ipsum
           </h1>
           <nav className="hidden md:block">
             <ul className="flex space-x-4">
