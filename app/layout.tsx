@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/components/themeProvider"
 import { Toaster } from "@/components/ui/toaster"
 import Header from "@/components/layout/header"
+import Footer from "@/components/layout/footer"
 
 const playfair_display = Playfair_Display({
   subsets: ["latin"],
@@ -48,7 +49,7 @@ export default function RootLayout({
           <div className="min-h-dvh grid grid-rows-[auto_1fr_auto]">
             <Header />
             <main>{children}</main>
-            <footer />
+            <Footer />
           </div>
           <Toaster />
         </ThemeProvider>
