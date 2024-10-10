@@ -1,8 +1,9 @@
-import { getAllRecipes, getRecipeBySlug, Recipe } from "@/lib/queries/recipes"
+import { getAllRecipes, getRecipeBySlug } from "@/lib/queries/recipes"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
 import { TypographyH1, TypographyP } from "@/components/typography"
 import renderRichText from "@/components/richText"
+import { Recipe } from "@/lib/queries/types"
 
 export async function generateStaticParams() {
   const recipes: Recipe[] = await getAllRecipes()
@@ -24,19 +25,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
     <div>
       <TypographyH1>{recipe.title}</TypographyH1>
       <TypographyP>{recipe.summary}</TypographyP>
-      <div>
+      {/* <div>
         {recipe.date &&
           new Date(recipe.date).toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",
             day: "numeric",
           })}
-          <br />
-          Author: {recipe.author?.name}
-          <br />
-          Category: {recipe.category?.name}
-      </div>
-      
+      </div> */}
       <div>{renderRichText(recipe.details?.json)}</div>
     </div>
   )

@@ -1,7 +1,8 @@
 import Link from "next/link"
-import { getAllRecipes, Recipe } from "@/lib/queries/recipes"
+import { getAllRecipes} from "@/lib/queries/recipes"
 import { draftMode } from "next/headers"
 import { TypographyLI, TypographyUL } from "@/components/typography"
+import { Recipe } from "@/lib/queries/types"
 
 export default async function Page() {
   const { isEnabled } = draftMode()
