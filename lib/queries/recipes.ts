@@ -1,55 +1,4 @@
 import { fetchGraphQL } from "../api"
-import { Document } from "@contentful/rich-text-types"
-
-export interface Recipe {
-  sys: {
-    id: string
-  }
-  title: string
-  slug: string
-  summary: string
-  date: string
-  author: Author
-  category: Category
-  image: Image
-  details: Details
-  prepTime: string
-  cookTime: string
-  totalTime: string
-  serves: string
-  ingredients: Ingredients
-  preparations: Preparations
-}
-
-type Author = {
-  name: string
-  slug: string
-}
-
-type Category = {
-  name: string
-  slug: string
-}
-
-type Image = {
-  title: string
-  description: string
-  url: string
-  width: string
-  height: string
-}
-
-type Details = {
-  json: Document
-}
-
-type Ingredients = {
-  json: Document
-}
-
-type Preparations = {
-  json: Document
-}
 
 const RECIPE_GRAPHQL_FIELDS = `
   sys {
@@ -59,14 +8,6 @@ const RECIPE_GRAPHQL_FIELDS = `
   slug
   summary
   date
-  author {
-    name
-    slug
-  }
-  category {
-    title
-    slug
-  }
   image {
     title
     description
@@ -77,15 +18,14 @@ const RECIPE_GRAPHQL_FIELDS = `
   details {
     json
   }
-  prepTime
-  cookTime
-  totalTime
-  serves
-  ingredients {
-    json
-  }
-  preparations {
-    json
+  tagsCollection {
+    items {
+      sys {
+        id
+      }
+      title
+      slug
+    }
   }
 `
 
