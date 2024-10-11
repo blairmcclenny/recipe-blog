@@ -9,7 +9,6 @@ const RECIPE_GRAPHQL_FIELDS = `
   summary
   date
   image {
-    title
     description
     url
     width
