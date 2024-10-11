@@ -34,6 +34,12 @@ export type Recipe = {
     json: Document
   }
   tagsCollection: {
-    items: RecipeTag[]
+    items: {
+      sys: {
+        id: string
+      }
+      title: string
+      slug: string
+    }[]
   }
 }
