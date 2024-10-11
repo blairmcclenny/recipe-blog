@@ -2,7 +2,7 @@ export async function fetchGraphQL(
   query: string,
   preview = false
 ): Promise<any> {
-  return fetch(
+  const response = await fetch(
     `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}/environments/${process.env.CONTENTFUL_ENVIRONMENT}`,
     {
       method: "POST",
@@ -15,7 +15,10 @@ export async function fetchGraphQL(
         }`,
       },
       body: JSON.stringify({ query }),
-      next: { tags: ["recipes"] },
+      // next: { tags: ["recipes"] },
     }
-  ).then((response) => response.json());
+  )
+
+  const data = await response.json()
+  return data
 }
