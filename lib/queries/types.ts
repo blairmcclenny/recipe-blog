@@ -8,9 +8,9 @@ export type RecipeTag = {
   slug: string
   image: {
     description: string
+    url: string
     width: number
     height: number
-    url: string
   }
   summary: string
 }
@@ -24,7 +24,6 @@ export type Recipe = {
   summary: string
   date: string
   image: {
-    title: string
     description: string
     url: string
     width: number
@@ -34,6 +33,12 @@ export type Recipe = {
     json: Document
   }
   tagsCollection: {
-    items: RecipeTag[]
+    items: {
+      sys: {
+        id: string
+      }
+      title: string
+      slug: string
+    }[]
   }
 }
