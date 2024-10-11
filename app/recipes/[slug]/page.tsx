@@ -25,14 +25,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
     <div>
       <TypographyH1>{recipe.title}</TypographyH1>
       <TypographyP>{recipe.summary}</TypographyP>
-      {/* <div>
+      <div>
         {recipe.date &&
           new Date(recipe.date).toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",
             day: "numeric",
           })}
-      </div> */}
+      </div>
       <div>{renderRichText(recipe.details?.json)}</div>
     </div>
   )
