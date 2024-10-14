@@ -1,4 +1,4 @@
-import { getAllRecipes } from "@/lib/queries/recipes/recipes"
+import { getAllRecipes } from "@/lib/queries/recipes"
 import { notFound } from "next/navigation"
 import { draftMode } from "next/headers"
 import { Card, CardHeader, CardTitle } from "@/components/ui/card"

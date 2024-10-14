@@ -1,4 +1,4 @@
-import { getRecipeBySlug, getRecipeSlugs } from "@/lib/queries/recipes/recipes"
+import { getRecipeBySlug, getRecipeSlugs } from "@/lib/queries/recipes"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
 import { TypographyH1, TypographyP } from "@/components/typography"
