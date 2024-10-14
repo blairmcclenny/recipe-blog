@@ -1,5 +1,5 @@
 
-import { getRecipeBySlug } from "@/lib/queries/recipes"
+import { getRecipeBySlug } from "@/lib/queries/recipes/recipes"
 import { draftMode } from "next/headers"
 import { redirect } from "next/navigation"
 

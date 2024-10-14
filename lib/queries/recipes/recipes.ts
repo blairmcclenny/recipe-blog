@@ -1,4 +1,4 @@
-import { fetchGraphQL } from "../api"
+import { fetchGraphQL } from "../../api"
 import { RecipeBySlug, Recipes, RecipeSlugs } from "./types"
 
 export async function getAllRecipes(limit?: Number, isDraftMode = false) {
