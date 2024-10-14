@@ -1,33 +1,13 @@
-// import Link from "next/link"
-// import { getAllRecipes} from "@/lib/queries/recipes"
-// import { draftMode } from "next/headers"
-// import { TypographyLI, TypographyUL } from "@/components/typography"
-// import { Recipe } from "@/lib/queries/types"
-
-// export default async function Page() {
-//   const { isEnabled } = draftMode()
-//   const recipes: Recipe[] = await getAllRecipes(10, isEnabled)
-
-//   return (
-//     <div>
-//       <TypographyUL>
-//         {recipes.map((recipe: Recipe) => (
-//           <TypographyLI key={recipe.sys.id}>
-//             <Link href={`/recipes/${recipe.slug}`}>{recipe.title}</Link>
-//           </TypographyLI>
-//         ))}
-//       </TypographyUL>
-//     </div>
-//   )
-// }
-
-import { getRecipeSlugs } from "@/lib/queries/recipes"
+import { getAllRecipes } from "@/lib/queries/recipes"
 import { notFound } from "next/navigation"
-// import { draftMode } from "next/headers"
+import { draftMode } from "next/headers"
+import { Card, CardHeader, CardTitle } from "@/components/ui/card"
+import Link from "next/link"
 
 export default async function Page() {
-  // const { isEnabled } = draftMode()
-  const data = await getRecipeSlugs()
+  const { isEnabled } = draftMode()
+
+  const data = await getAllRecipes(20, isEnabled)
   const recipes = data?.recipeCollection?.items
 
   if (!recipes) {
@@ -35,9 +15,15 @@ export default async function Page() {
   }
 
   return (
-    <div>
+    <div className="grid grid-cols-4 gap-4">
       {recipes.map((recipe) => (
-        <div>{recipe.slug}</div>
+        <Link href={`/recipes/${recipe.slug}`} key={recipe.sys.id}>
+          <Card>
+            <CardHeader>
+              <CardTitle>{recipe.title}</CardTitle>
+            </CardHeader>
+          </Card>
+        </Link>
       ))}
     </div>
   )

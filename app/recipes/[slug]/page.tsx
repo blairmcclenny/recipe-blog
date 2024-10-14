@@ -3,7 +3,6 @@ import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
 import { TypographyH1, TypographyP } from "@/components/typography"
 import renderRichText from "@/components/richText"
-import { Recipe } from "@/lib/queries/types"
 
 export async function generateStaticParams() {
   const data = await getRecipeSlugs()
@@ -16,7 +15,9 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const { isEnabled } = draftMode()
-  const recipe: Recipe = await getRecipeBySlug(params.slug, isEnabled)
+  
+  const data = await getRecipeBySlug(params.slug, isEnabled)
+  const recipe = data?.recipeCollection?.items?.[0]
 
   if (!recipe) {
     notFound()
