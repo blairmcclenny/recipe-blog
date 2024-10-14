@@ -16,7 +16,8 @@ export async function GET(request: Request) {
     return new Response("Invalid token", { status: 401 })
   }
 
-  const recipe = await getRecipeBySlug(slug)
+  const data = await getRecipeBySlug(slug)
+  const recipe = data?.recipeCollection?.items?.[0]
 
   if (!recipe) {
     return new Response("Recipe not found", { status: 404 })

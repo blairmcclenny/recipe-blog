@@ -1,21 +1,23 @@
-import { getAllRecipes, getRecipeBySlug } from "@/lib/queries/recipes"
+import { getRecipeBySlug, getRecipeSlugs } from "@/lib/queries/recipes"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
 import { TypographyH1, TypographyP } from "@/components/typography"
 import renderRichText from "@/components/richText"
-import { Recipe } from "@/lib/queries/types"
 
 export async function generateStaticParams() {
-  const recipes: Recipe[] = await getAllRecipes()
+  const data = await getRecipeSlugs()
+  const recipeSlugs = data?.recipeCollection?.items
 
-  return recipes.map((recipe) => ({
+  return recipeSlugs?.map((recipe) => ({
     slug: recipe.slug,
   }))
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const { isEnabled } = draftMode()
-  const recipe: Recipe = await getRecipeBySlug(params.slug, isEnabled)
+  
+  const data = await getRecipeBySlug(params.slug, isEnabled)
+  const recipe = data?.recipeCollection?.items?.[0]
 
   if (!recipe) {
     notFound()
