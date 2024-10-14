@@ -47,7 +47,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="min-h-dvh grid grid-rows-[auto_1fr_auto]">
-            <Header />
+            {/* <Header /> */}
             <main>{children}</main>
             <Footer />
           </div>

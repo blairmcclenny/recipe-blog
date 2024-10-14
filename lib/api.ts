@@ -1,7 +1,16 @@
-export async function fetchGraphQL(
-  query: string,
-  preview = false
-): Promise<any> {
+export async function fetchGraphQL<T>({
+  query,
+  variables = {},
+  tags = [],
+  preview = false,
+  revalidate,
+}: {
+  query: string
+  variables?: any
+  tags?: string[]
+  preview?: boolean
+  revalidate?: number
+}): Promise<T | undefined> {
   const response = await fetch(
     `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}/environments/${process.env.CONTENTFUL_ENVIRONMENT}`,
     {
@@ -14,11 +23,17 @@ export async function fetchGraphQL(
             : process.env.CONTENTFUL_ACCESS_TOKEN
         }`,
       },
-      body: JSON.stringify({ query }),
-      // next: { tags: ["recipes"] },
+      body: JSON.stringify({ query, variables }),
+      next: { tags, ...{ revalidate } },
     }
   )
 
-  const data = await response.json()
-  return data
+  const { data, errors } = await response.json()
+
+  if (errors) {
+    console.error(errors)
+    throw new Error("error")
+  }
+
+  return data as T
 }
