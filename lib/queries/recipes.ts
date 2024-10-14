@@ -1,4 +1,5 @@
-import { fetchGraphQL } from "../api"
+import { fetchGraphQL, fetchGraphQLv2 } from "../api"
+import { RecipeSlugs } from "./types"
 
 const RECIPE_GRAPHQL_FIELDS = `
   sys {
@@ -63,4 +64,35 @@ export async function getRecipeBySlug(slug: string, isDraftMode = false) {
   )
 
   return recipe?.data?.recipeCollection?.items[0]
+}
+
+export async function getRecipeSlugs(isDraftMode = false) {
+  const query = `#graphql
+    query RecipeSlugs(
+      $where: RecipeFilter
+    ) {
+      recipeCollection(
+        where: $where
+        preview: ${isDraftMode ? "true" : "false"}
+      ) {
+        items {
+          slug
+        }
+      }
+    }
+  `
+
+  const data = await fetchGraphQLv2<RecipeSlugs>({
+    query,
+    variables: {
+      where: { slug_exists: true },
+    },
+    preview: isDraftMode,
+  })
+
+  if (!data) {
+    throw new Error("Something went wrong")
+  }
+
+  return data
 }
