@@ -15,8 +15,11 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const { isEnabled } = draftMode()
-  
-  const data = await getRecipeBySlug(params.slug, isEnabled)
+
+  const data = await getRecipeBySlug({
+    slug: params.slug,
+    isDraftMode: isEnabled,
+  })
   const recipe = data?.recipeCollection?.items?.[0]
 
   if (!recipe) {
