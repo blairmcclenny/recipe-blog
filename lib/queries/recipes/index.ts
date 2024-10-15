@@ -1,7 +1,13 @@
 import { fetchGraphQL } from "../../api"
 import { RecipeBySlug, Recipes, RecipeSlugs } from "./types"
 
-export async function getAllRecipes(limit?: Number, isDraftMode = false) {
+export async function getAllRecipes({
+  limit = 0,
+  isDraftMode = false,
+}: {
+  limit?: number
+  isDraftMode?: boolean
+}) {
   const query = `#graphql
     query Recipes(
       $limit: Int
@@ -50,7 +56,13 @@ export async function getAllRecipes(limit?: Number, isDraftMode = false) {
   return data
 }
 
-export async function getRecipeBySlug(slug: string, isDraftMode = false) {
+export async function getRecipeBySlug({
+  slug,
+  isDraftMode = false,
+}: {
+  slug: string
+  isDraftMode?: boolean
+}) {
   const query = `#graphql
     query RecipeBySlug(
       $where: RecipeFilter
