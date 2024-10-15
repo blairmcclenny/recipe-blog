@@ -7,7 +7,10 @@ import Link from "next/link"
 export default async function Page() {
   const { isEnabled } = draftMode()
 
-  const data = await getAllRecipes(20, isEnabled)
+  const data = await getAllRecipes({
+    limit: 20,
+    isDraftMode: isEnabled,
+  })
   const recipes = data?.recipeCollection?.items
 
   if (!recipes) {

@@ -1,4 +1,3 @@
-
 import { getRecipeBySlug } from "@/lib/queries/recipes"
 import { draftMode } from "next/headers"
 import { redirect } from "next/navigation"
@@ -16,7 +15,7 @@ export async function GET(request: Request) {
     return new Response("Invalid token", { status: 401 })
   }
 
-  const data = await getRecipeBySlug(slug)
+  const data = await getRecipeBySlug({ slug: slug })
   const recipe = data?.recipeCollection?.items?.[0]
 
   if (!recipe) {
