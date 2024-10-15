@@ -1,11 +1,19 @@
-import { fetchGraphQL } from "../../api"
-import { RecipeBySlug, Recipes, RecipeSlugs } from "./types"
+import { fetchGraphQL } from "@/lib/api"
+import {
+  RecipeBySlug,
+  Recipes,
+  RecipesByTagSlug,
+  RecipeSlugs,
+  RecipeTagSlugs,
+} from "./types"
 
 export async function getAllRecipes({
   limit = 0,
+  skip = 0,
   isDraftMode = false,
 }: {
   limit?: number
+  skip?: number
   isDraftMode?: boolean
 }) {
   const query = `#graphql
@@ -13,7 +21,6 @@ export async function getAllRecipes({
       $limit: Int
     ) {
       recipeCollection(
-        where: { slug_exists: true }
         limit: $limit
         preview: ${isDraftMode ? "true" : "false"}
       ) {
@@ -29,15 +36,6 @@ export async function getAllRecipes({
             width
             height
           }
-          tagsCollection {
-            items {
-              sys {
-                id
-              }
-              title
-              slug
-            }
-          }
         }
       }
     }
@@ -45,7 +43,71 @@ export async function getAllRecipes({
 
   const data = await fetchGraphQL<Recipes>({
     query,
-    variables: { limit },
+    variables: { limit, skip },
+    preview: isDraftMode,
+  })
+
+  if (!data) {
+    throw new Error("Something went wrong")
+  }
+
+  return data
+}
+
+export async function getAllRecipesByTagSlug({
+  limit = 0,
+  skip = 0,
+  tagSlug,
+  isDraftMode = false,
+}: {
+  limit?: number
+  skip?: number
+  tagSlug: string
+  isDraftMode?: boolean
+}) {
+  const query = `#graphql
+    query Recipes(
+      $limit: Int
+      $skip: Int
+      $where: RecipeTagFilter
+    ) {
+      recipeTagCollection(
+        where: $where
+        preview: ${isDraftMode ? "true" : "false"}
+      ) {
+        items {
+          title
+          linkedFrom {
+            recipeCollection(limit: $limit, skip: $skip) {
+              items {
+                sys {
+                  id
+                }
+                title
+                slug
+                image {
+                  description
+                  url
+                  width
+                  height
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `
+
+  const data = await fetchGraphQL<RecipesByTagSlug>({
+    query,
+    variables: {
+      limit,
+      skip,
+      where: {
+        slug: tagSlug,
+      },
+    },
     preview: isDraftMode,
   })
 
@@ -137,6 +199,31 @@ export async function getRecipeSlugs(isDraftMode = false) {
     variables: {
       where: { slug_exists: true },
     },
+    preview: isDraftMode,
+  })
+
+  if (!data) {
+    throw new Error("Something went wrong")
+  }
+
+  return data
+}
+
+export async function getRecipeTagSlugs(isDraftMode = false) {
+  const query = `#graphql
+    query RecipeTagSlugs {
+      recipeTagCollection(
+        preview: ${isDraftMode ? "true" : "false"}
+      ) {
+        items {
+          slug
+        }
+      }
+    }
+  `
+
+  const data = await fetchGraphQL<RecipeTagSlugs>({
+    query,
     preview: isDraftMode,
   })
 
