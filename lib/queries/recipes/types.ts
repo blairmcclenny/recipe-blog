@@ -8,33 +8,6 @@ export type RecipeSlugs = {
   }
 }
 
-export type Recipes = {
-  recipeCollection: {
-    items: {
-      sys: {
-        id: string
-      }
-      title: string
-      slug: string
-      image: {
-        description: string
-        url: string
-        width: number
-        height: number
-      }
-      tagsCollection: {
-        items: {
-          sys: {
-            id: string
-          }
-          title: string
-          slug: string
-        }[]
-      }
-    }[]
-  }
-}
-
 export type RecipeBySlug = {
   recipeCollection: {
     items: {
@@ -63,6 +36,57 @@ export type RecipeBySlug = {
           slug: string
         }[]
       }
+    }[]
+  }
+}
+
+export type RecipesByTagSlug = {
+  recipeTagCollection: {
+    items: {
+      title: string
+      linkedFrom: {
+        recipeCollection: {
+          items: {
+            sys: {
+              id: string
+            }
+            title: string
+            slug: string
+            image: {
+              description: string
+              url: string
+              width: number
+              height: number
+            }
+          }[]
+        }
+      }
+    }[]
+  }
+}
+
+export type Recipes = {
+  recipeCollection: {
+    items: {
+      sys: {
+        id: string
+      }
+      title: string
+      slug: string
+      image: {
+        description: string
+        url: string
+        width: number
+        height: number
+      }
+    }[]
+  }
+}
+
+export type RecipeTagSlugs = {
+  recipeTagCollection: {
+    items: {
+      slug: string
     }[]
   }
 }
