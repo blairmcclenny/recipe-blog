@@ -1,4 +1,4 @@
-export type HeaderNavigation = {
+export type Navigation = {
   navigationCollection: {
     items: {
       linksCollection: {

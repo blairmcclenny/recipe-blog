@@ -1,5 +1,5 @@
 import { fetchGraphQL } from "@/lib/api"
-import { HeaderNavigation } from "./types"
+import { Navigation } from "./types"
 
 export async function getNavigation({
   title,
@@ -59,7 +59,7 @@ export async function getNavigation({
     }
   `
 
-  const data = await fetchGraphQL<HeaderNavigation>({
+  const data = await fetchGraphQL<Navigation>({
     query,
     variables: {
       where: {
