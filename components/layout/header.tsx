@@ -11,11 +11,11 @@
 // import useWindowScroll from "@/hooks/useWindowScroll"
 // import useMediaQuery from "@/hooks/useMediaQuery"
 
-import { getHeaderNavigation } from "@/lib/queries/navigation"
+import { getNavigation } from "@/lib/queries/navigation"
 import Link from "next/link"
 
 export default async function Header() {
-  const data = await getHeaderNavigation({ isDraftMode: false })
+  const data = await getNavigation({ title: "Header", isDraftMode: false })
   const links = data?.navigationCollection?.items[0]?.linksCollection?.items
 
   //   const isScrolled = useWindowScroll(50)

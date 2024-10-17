@@ -1,12 +1,18 @@
 import { fetchGraphQL } from "@/lib/api"
 import { HeaderNavigation } from "./types"
 
-export async function getHeaderNavigation({ isDraftMode = false }) {
+export async function getNavigation({
+  title,
+  isDraftMode = false,
+}: {
+  title: "Header" | "Footer"
+  isDraftMode?: boolean
+}) {
   const query = `#graphql
-    query HeaderNavigation {
+    query Navigation($where: NavigationFilter) {
       navigationCollection(
         limit: 1, 
-        where: { title: "Header" }
+        where: $where
       ) {
         items {
           linksCollection(limit: 10) {
@@ -55,6 +61,11 @@ export async function getHeaderNavigation({ isDraftMode = false }) {
 
   const data = await fetchGraphQL<HeaderNavigation>({
     query,
+    variables: {
+      where: {
+        title,
+      },
+    },
     preview: isDraftMode,
   })
 
