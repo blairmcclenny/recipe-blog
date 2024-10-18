@@ -12,7 +12,8 @@
 // import useMediaQuery from "@/hooks/useMediaQuery"
 
 import { getNavigation } from "@/lib/queries/navigation"
-import Link from "next/link"
+import Link from "@/components/link"
+import NextLink from "next/link"
 
 export default async function Header() {
   const data = await getNavigation({ title: "Header", isDraftMode: false })
@@ -36,6 +37,7 @@ export default async function Header() {
 
   // temp state variables
   const isScrolled = false
+  
 
   return (
     <>
@@ -47,19 +49,21 @@ export default async function Header() {
         }`}
       >
         <div className="container mx-auto px-4 h-full flex items-center justify-between">
-          <Link
+          <NextLink
             href="/"
             className={`font-serif font-extrabold transition-all duration-300 ease-in-out ${
               isScrolled ? "text-xl" : "text-3xl"
             }`}
           >
             Lorem Ipsum
-          </Link>
+          </NextLink>
           <nav className="hidden md:block">
             <ul className="flex space-x-4">
               {links?.map((link) => (
                 <li key={link.sys.id}>
-                  <a href={link.url}>{link.text}</a>
+                  <Link link={link}>
+                    {link.text}
+                  </Link>
                 </li>
               ))}
             </ul>
