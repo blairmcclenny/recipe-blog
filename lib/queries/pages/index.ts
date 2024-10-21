@@ -1,5 +1,30 @@
 import { fetchGraphQL } from "@/lib/api"
-import { Pages } from "./types"
+import { Pages, PageSlugs } from "./types"
+
+export async function getPageSlugs(isDraftMode = false) {
+  const query = `#graphql
+    query PageSlugs {
+      pageCollection(
+        preview: ${isDraftMode ? "true" : "false"}
+      ) {
+        items {
+          slug
+        }
+      }
+    }
+  `
+
+  const data = await fetchGraphQL<PageSlugs>({
+    query,
+    preview: isDraftMode,
+  })
+
+  if (!data) {
+    throw new Error("Something went wrong")
+  }
+
+  return data
+}
 
 export async function getPages({
   limit,

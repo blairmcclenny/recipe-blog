@@ -1,13 +1,13 @@
 import renderRichText from "@/components/richText"
 import { TypographyH1 } from "@/components/typography"
-import { getPages } from "@/lib/queries/pages"
+import { getPages, getPageSlugs } from "@/lib/queries/pages"
 
 export async function generateStaticParams() {
-  const data = await getPages({ isDraftMode: false })
-  const pages = data?.pageCollection?.items
+  const data = await getPageSlugs(false)
+  const pageSlugs = data?.pageCollection?.items
 
-  return pages?.map((page) => ({
-    slug: page.slug,
+  return pageSlugs?.map((pageSlug) => ({
+    slug: pageSlug.slug,
   }))
 }
 
