@@ -6,14 +6,14 @@ export type Navigation = {
           sys: {
             id: string
           }
-          type: string
+          type: "LinkContent" | "LinkIndex" | "LinkJump" | "LinkUrl"
           text: string
-          content: {
-            type: string
+          content?: {
+            type: "Event" | "Page" | "Recipe"
             slug: string
           }
-          indexPage: string
-          url: string
+          indexPage?: "Recipes" | "Events"
+          url?: string
         }[]
       }
     }[]
