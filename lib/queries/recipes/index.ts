@@ -7,7 +7,32 @@ import {
   RecipeTagSlugs,
 } from "./types"
 
-export async function getAllRecipes({
+export async function getRecipeSlugs(isDraftMode = false) {
+  const query = `#graphql
+    query RecipeSlugs {
+      recipeCollection(
+        preview: ${isDraftMode ? "true" : "false"}
+      ) {
+        items {
+          slug
+        }
+      }
+    }
+  `
+
+  const data = await fetchGraphQL<RecipeSlugs>({
+    query,
+    preview: isDraftMode,
+  })
+
+  if (!data) {
+    throw new Error("Something went wrong")
+  }
+
+  return data
+}
+
+export async function getRecipes({
   limit = 0,
   skip = 0,
   isDraftMode = false,
@@ -54,7 +79,89 @@ export async function getAllRecipes({
   return data
 }
 
-export async function getAllRecipesByTagSlug({
+export async function getRecipeBySlug({
+  slug,
+  isDraftMode = false,
+}: {
+  slug: string
+  isDraftMode?: boolean
+}) {
+  const query = `#graphql
+    query RecipeBySlug(
+      $where: RecipeFilter
+    ) {
+      recipeCollection(
+        limit: 1
+        where: $where
+        preview: ${isDraftMode ? "true" : "false"}
+      ) {
+          items {
+            title
+            slug
+            summary
+            date
+            image {
+              description
+              url
+              width
+              height
+            }
+            details {
+              json
+            }
+            tagsCollection {
+              items {
+                sys {
+                  id
+                }
+                title
+                slug
+              }
+            }
+          }
+        }
+      }
+    `
+
+  const data = await fetchGraphQL<RecipeBySlug>({
+    query,
+    variables: { where: { slug } },
+    preview: isDraftMode,
+  })
+
+  if (!data) {
+    throw new Error("Something went wrong")
+  }
+
+  return data
+}
+
+export async function getRecipeTagSlugs(isDraftMode = false) {
+  const query = `#graphql
+    query RecipeTagSlugs {
+      recipeTagCollection(
+        preview: ${isDraftMode ? "true" : "false"}
+      ) {
+        items {
+          slug
+        }
+      }
+    }
+  `
+
+  const data = await fetchGraphQL<RecipeTagSlugs>({
+    query,
+    preview: isDraftMode,
+  })
+
+  if (!data) {
+    throw new Error("Something went wrong")
+  }
+
+  return data
+}
+
+export async function getRecipesByTagSlug({
   limit = 0,
   skip = 0,
   tagSlug,
@@ -108,122 +215,6 @@ export async function getAllRecipesByTagSlug({
         slug: tagSlug,
       },
     },
-    preview: isDraftMode,
-  })
-
-  if (!data) {
-    throw new Error("Something went wrong")
-  }
-
-  return data
-}
-
-export async function getRecipeBySlug({
-  slug,
-  isDraftMode = false,
-}: {
-  slug: string
-  isDraftMode?: boolean
-}) {
-  const query = `#graphql
-    query RecipeBySlug(
-      $where: RecipeFilter
-    ) {
-      recipeCollection(
-        limit: 1
-        where: $where
-        preview: ${isDraftMode ? "true" : "false"}
-      ) {
-          items {
-            sys {
-              id
-            }
-            title
-            slug
-            summary
-            date
-            image {
-              description
-              url
-              width
-              height
-            }
-            details {
-              json
-            }
-            tagsCollection {
-              items {
-                sys {
-                  id
-                }
-                title
-                slug
-              }
-            }
-          }
-        }
-      }
-    `
-
-  const data = await fetchGraphQL<RecipeBySlug>({
-    query,
-    variables: { where: { slug } },
-    preview: isDraftMode,
-  })
-
-  if (!data) {
-    throw new Error("Something went wrong")
-  }
-
-  return data
-}
-
-export async function getRecipeSlugs(isDraftMode = false) {
-  const query = `#graphql
-    query RecipeSlugs(
-      $where: RecipeFilter
-    ) {
-      recipeCollection(
-        where: $where
-        preview: ${isDraftMode ? "true" : "false"}
-      ) {
-        items {
-          slug
-        }
-      }
-    }
-  `
-
-  const data = await fetchGraphQL<RecipeSlugs>({
-    query,
-    variables: {
-      where: { slug_exists: true },
-    },
-    preview: isDraftMode,
-  })
-
-  if (!data) {
-    throw new Error("Something went wrong")
-  }
-
-  return data
-}
-
-export async function getRecipeTagSlugs(isDraftMode = false) {
-  const query = `#graphql
-    query RecipeTagSlugs {
-      recipeTagCollection(
-        preview: ${isDraftMode ? "true" : "false"}
-      ) {
-        items {
-          slug
-        }
-      }
-    }
-  `
-
-  const data = await fetchGraphQL<RecipeTagSlugs>({
-    query,
     preview: isDraftMode,
   })
 
