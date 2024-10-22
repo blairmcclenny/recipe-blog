@@ -1,4 +1,4 @@
-import { getAllRecipes } from "@/lib/queries/recipes"
+import { getRecipes } from "@/lib/queries/recipes"
 import { notFound } from "next/navigation"
 import { draftMode } from "next/headers"
 import { Card, CardHeader, CardTitle } from "@/components/ui/card"
@@ -7,7 +7,7 @@ import Link from "next/link"
 export default async function Page() {
   const { isEnabled } = draftMode()
 
-  const data = await getAllRecipes({
+  const data = await getRecipes({
     limit: 20,
     isDraftMode: isEnabled,
   })
