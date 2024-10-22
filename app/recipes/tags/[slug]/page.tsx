@@ -1,7 +1,7 @@
 import { TypographyH1 } from "@/components/typography"
 import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 import {
-  getAllRecipesByTagSlug,
+  getRecipesByTagSlug,
   getRecipeTagSlugs,
 } from "@/lib/queries/recipes"
 import { draftMode } from "next/headers"
@@ -21,7 +21,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params
   const { isEnabled } = draftMode()
 
-  const data = await getAllRecipesByTagSlug({
+  const data = await getRecipesByTagSlug({
     limit: 20,
     skip: 0,
     tagSlug: slug,
