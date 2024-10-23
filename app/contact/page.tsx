@@ -44,7 +44,7 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="max-w-xl mx-auto mt-10 space-y-6">
+    <div className="container mx-auto px-4 max-w-xl space-y-6">
       <TypographyH1>Contact Us</TypographyH1>
       <form ref={formRef} action={handleSubmit} className="space-y-6">
         <div className="space-y-2">

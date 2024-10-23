@@ -27,7 +27,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div>
+    <div className="container mx-auto px-4 max-w-4xl">
       <TypographyH1>{recipe.title}</TypographyH1>
       <TypographyP>{recipe.summary}</TypographyP>
       <div>

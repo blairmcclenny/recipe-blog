@@ -48,7 +48,7 @@ export default function RootLayout({
         >
           <div className="min-h-dvh grid grid-rows-[auto_1fr_auto]">
             <Header />
-            <main>{children}</main>
+            <main className="my-16">{children}</main>
             <Footer />
           </div>
           <Toaster />
