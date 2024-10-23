@@ -1,9 +1,6 @@
 import { TypographyH1 } from "@/components/typography"
 import { Card, CardHeader, CardTitle } from "@/components/ui/card"
-import {
-  getRecipesByTagSlug,
-  getRecipeTagSlugs,
-} from "@/lib/queries/recipes"
+import { getRecipesByTagSlug, getRecipeTagSlugs } from "@/lib/queries/recipes"
 import { draftMode } from "next/headers"
 import Link from "next/link"
 import { notFound } from "next/navigation"
@@ -35,7 +32,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div>
+    <div className="container mx-auto px-4">
       <TypographyH1>{recipeTag.title}</TypographyH1>
       <div className="grid grid-cols-4 gap-4">
         {recipes.map((recipe) => (

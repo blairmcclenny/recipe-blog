@@ -20,11 +20,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const page = data?.pageCollection?.items?.[0]
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <div className="container mx-auto px-4 max-w-4xl">
       <TypographyH1>{page.title}</TypographyH1>
-      <div className="prose lg:prose-lg">
+      <div>
         {renderRichText(page.details.json)}
       </div>
-    </main>
+    </div>
   )
 }
