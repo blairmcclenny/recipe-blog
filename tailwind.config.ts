@@ -21,7 +21,7 @@ const config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-open-sans)", ...fontFamily.sans],
-        serif: ["var(--font-playfair-display)", ...fontFamily.serif]
+        serif: ["var(--font-playfair-display)", ...fontFamily.serif],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -79,7 +79,10 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/container-queries"),
+  ],
 } satisfies Config
 
 export default config
