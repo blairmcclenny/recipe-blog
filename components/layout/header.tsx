@@ -17,7 +17,7 @@ import NextLink from "next/link"
 
 export default async function Header() {
   const data = await getNavigation({ title: "Header", isDraftMode: false })
-  const links = data?.navigationCollection?.items[0]?.linksCollection?.items
+  const links = data?.navigationCollection?.items?.[0]?.linksCollection?.items
 
   //   const isScrolled = useWindowScroll(50)
   //   const isMobile = useMediaQuery("(max-width: 768px)")
