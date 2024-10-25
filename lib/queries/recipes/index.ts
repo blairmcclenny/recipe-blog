@@ -44,11 +44,14 @@ export async function getRecipes({
   const query = `#graphql
     query Recipes(
       $limit: Int
+      $skip: Int
     ) {
       recipeCollection(
         limit: $limit
+        skip: $skip
         preview: ${isDraftMode ? "true" : "false"}
       ) {
+        total
         items {
           sys {
             id

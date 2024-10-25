@@ -10,6 +10,7 @@ export type RecipeSlugs = {
 
 export type Recipes = {
   recipeCollection: {
+    total: number
     items: {
       sys: {
         id: string
