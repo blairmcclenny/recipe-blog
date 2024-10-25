@@ -25,7 +25,7 @@ export default async function Page({ searchParams }: { searchParams: Params }) {
   const recipes = data?.recipeCollection?.items
   const totalPages = Math.ceil(data?.recipeCollection?.total / recipesPerPage)
 
-  if (!recipes) {
+  if (!recipes || !totalPages) {
     notFound()
   }
 

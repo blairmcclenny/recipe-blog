@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/pagination"
 import { cn, generatePagination, generatePaginationCompact } from "@/lib/utils"
 import { usePathname, useSearchParams } from "next/navigation"
+import useMediaQuery from "@/hooks/useMediaQuery"
 
 export default function PaginationController({
   totalPages,
@@ -25,8 +26,8 @@ export default function PaginationController({
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams)
     params.set("page", pageNumber.toString())
-    
-    if (pageNumber === 1) {
+
+    if (pageNumber.toString() === "1") {
       params.delete("page")
     }
 
@@ -34,28 +35,13 @@ export default function PaginationController({
   }
 
   const [isMounted, setIsMounted] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  const isCompact = useMediaQuery("(max-width: 640px)")
 
   useEffect(() => {
     setIsMounted(true)
   }, [])
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 640px)")
-
-    const handleMediaQueryChange = (e: MediaQueryListEvent) => {
-      setIsMobile(e.matches)
-    }
-
-    setIsMobile(mediaQuery.matches)
-    mediaQuery.addEventListener("change", handleMediaQueryChange)
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleMediaQueryChange)
-    }
-  }, [])
-
-  const allPages = isMobile
+  const allPages = isCompact
     ? generatePaginationCompact(currentPage, totalPages)
     : generatePagination(currentPage, totalPages)
 
