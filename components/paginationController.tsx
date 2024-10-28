@@ -1,6 +1,5 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import {
   Pagination,
   PaginationContent,
@@ -12,45 +11,24 @@ import {
 } from "@/components/ui/pagination"
 import { cn, generatePagination, generatePaginationCompact } from "@/lib/utils"
 import { usePathname, useSearchParams } from "next/navigation"
-import useMediaQuery from "@/hooks/useMediaQuery"
 
-export default function PaginationController({
+function MobilePagination({
   totalPages,
+  currentPage,
+  createPageUrl,
 }: {
   totalPages: number
+  currentPage: number
+  createPageUrl: (pageNumber: number | string) => string
 }) {
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
-  const currentPage = Number(searchParams.get("page")) || 1
-
-  const createPageURL = (pageNumber: number | string) => {
-    const params = new URLSearchParams(searchParams)
-    params.set("page", pageNumber.toString())
-
-    if (pageNumber.toString() === "1") {
-      params.delete("page")
-    }
-
-    return `${pathname}?${params.toString()}`
-  }
-
-  const [isMounted, setIsMounted] = useState(false)
-  const isCompact = useMediaQuery("(max-width: 640px)")
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  const allPages = isCompact
-    ? generatePaginationCompact(currentPage, totalPages)
-    : generatePagination(currentPage, totalPages)
+  const allPages = generatePaginationCompact(currentPage, totalPages)
 
   return (
-    <Pagination className={cn(!isMounted && "invisible")}>
+    <Pagination className="lg:hidden">
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            href={createPageURL(currentPage - 1)}
+            href={createPageUrl(currentPage - 1)}
             className={currentPage <= 1 ? "pointer-events-none" : ""}
             aria-disabled={currentPage <= 1}
             tabIndex={currentPage <= 1 ? -1 : undefined}
@@ -61,7 +39,7 @@ export default function PaginationController({
             <PaginationItem key={`${page}-${index}`}>
               {page !== "..." ? (
                 <PaginationLink
-                  href={createPageURL(page)}
+                  href={createPageUrl(page)}
                   isActive={currentPage === page}
                   className={cn(
                     "min-w-9 w-fit px-2.5",
@@ -78,7 +56,7 @@ export default function PaginationController({
         })}
         <PaginationItem>
           <PaginationNext
-            href={createPageURL(currentPage + 1)}
+            href={createPageUrl(currentPage + 1)}
             className={currentPage >= totalPages ? "pointer-events-none" : ""}
             aria-disabled={currentPage >= totalPages}
             tabIndex={currentPage >= totalPages ? -1 : undefined}
@@ -86,5 +64,95 @@ export default function PaginationController({
         </PaginationItem>
       </PaginationContent>
     </Pagination>
+  )
+}
+
+function DesktopPagination({
+  totalPages,
+  currentPage,
+  createPageUrl,
+}: {
+  totalPages: number
+  currentPage: number
+  createPageUrl: (pageNumber: number | string) => string
+}) {
+  const allPages = generatePagination(currentPage, totalPages)
+
+  return (
+    <Pagination className="max-lg:hidden">
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious
+            href={createPageUrl(currentPage - 1)}
+            className={currentPage <= 1 ? "pointer-events-none" : ""}
+            aria-disabled={currentPage <= 1}
+            tabIndex={currentPage <= 1 ? -1 : undefined}
+          />
+        </PaginationItem>
+        {allPages.map((page, index) => {
+          return (
+            <PaginationItem key={`${page}-${index}`}>
+              {page !== "..." ? (
+                <PaginationLink
+                  href={createPageUrl(page)}
+                  isActive={currentPage === page}
+                  className={cn(
+                    "min-w-9 w-fit px-2.5",
+                    currentPage === page ? "pointer-events-none" : ""
+                  )}
+                >
+                  {page}
+                </PaginationLink>
+              ) : (
+                <PaginationEllipsis />
+              )}
+            </PaginationItem>
+          )
+        })}
+        <PaginationItem>
+          <PaginationNext
+            href={createPageUrl(currentPage + 1)}
+            className={currentPage >= totalPages ? "pointer-events-none" : ""}
+            aria-disabled={currentPage >= totalPages}
+            tabIndex={currentPage >= totalPages ? -1 : undefined}
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  )
+}
+
+export default function PaginationController({
+  totalPages,
+}: {
+  totalPages: number
+}) {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const currentPage = Number(searchParams.get("page")) || 1
+
+  const createPageUrl = (pageNumber: number | string) => {
+    const params = new URLSearchParams(searchParams)
+
+    pageNumber.toString() !== "1"
+      ? params.set("page", pageNumber.toString())
+      : params.delete("page")
+
+    return `${pathname}?${params.toString()}`
+  }
+
+  return (
+    <>
+      <MobilePagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        createPageUrl={createPageUrl}
+      />
+      <DesktopPagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        createPageUrl={createPageUrl}
+      />
+    </>
   )
 }
