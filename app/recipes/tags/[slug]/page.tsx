@@ -1,3 +1,4 @@
+import PaginationController from "@/components/paginationController"
 import RecipeGrid from "@/components/recipeGrid"
 import { TypographyH1 } from "@/components/typography"
 import { getRecipesByTagSlug, getRecipeTagSlugs } from "@/lib/queries/recipes"
@@ -13,27 +14,43 @@ export async function generateStaticParams() {
   }))
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: { slug: string }
+  searchParams: { page?: number }
+}) {
   const { slug } = params
+  const { page } = searchParams
   const { isEnabled } = draftMode()
 
+  const limit = 20
+  const skip = page ? (page - 1) * limit : 0
+
   const data = await getRecipesByTagSlug({
-    limit: 20,
-    skip: 0,
+    limit,
+    skip,
     tagSlug: slug,
     isDraftMode: isEnabled,
   })
+
   const recipeTag = data?.recipeTagCollection?.items?.[0]
   const recipes = recipeTag?.linkedFrom?.recipeCollection?.items
+  const totalRecipes = recipeTag?.linkedFrom?.recipeCollection?.total
+  const totalPages = Math.ceil(totalRecipes / limit)
 
-  if (!recipeTag || !recipes) {
+  if (!recipeTag || !recipes || !recipes?.length) {
     notFound()
   }
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto px-4 h-full">
       <TypographyH1>{recipeTag.title}</TypographyH1>
-      <RecipeGrid recipes={recipes} />
+      <div className="flex flex-col justify-between h-full">
+        <RecipeGrid recipes={recipes} />
+        <PaginationController totalPages={totalPages} />
+      </div>
     </div>
   )
 }
