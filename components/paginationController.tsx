@@ -23,27 +23,30 @@ function MobilePagination({
 }) {
   const allPages = generatePaginationCompact(currentPage, totalPages)
 
+  const noPrev = currentPage <= 1
+  const noNext = currentPage >= totalPages
+
   return (
     <Pagination className="lg:hidden">
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
             href={createPageUrl(currentPage - 1)}
-            className={currentPage <= 1 ? "pointer-events-none" : ""}
-            aria-disabled={currentPage <= 1}
-            tabIndex={currentPage <= 1 ? -1 : undefined}
+            className={cn(noPrev && "pointer-events-none")}
+            aria-disabled={noPrev}
+            tabIndex={noPrev ? -1 : undefined}
           />
         </PaginationItem>
         {allPages.map((page, index) => {
           return (
-            <PaginationItem key={`${page}-${index}`}>
+            <PaginationItem key={`${page}-${index}-desktop`}>
               {page !== "..." ? (
                 <PaginationLink
                   href={createPageUrl(page)}
                   isActive={currentPage === page}
                   className={cn(
                     "min-w-9 w-fit px-2.5",
-                    currentPage === page ? "pointer-events-none" : ""
+                    currentPage === page && "pointer-events-none"
                   )}
                 >
                   {page}
@@ -57,9 +60,9 @@ function MobilePagination({
         <PaginationItem>
           <PaginationNext
             href={createPageUrl(currentPage + 1)}
-            className={currentPage >= totalPages ? "pointer-events-none" : ""}
-            aria-disabled={currentPage >= totalPages}
-            tabIndex={currentPage >= totalPages ? -1 : undefined}
+            className={cn(noNext && "pointer-events-none")}
+            aria-disabled={noNext}
+            tabIndex={noNext ? -1 : undefined}
           />
         </PaginationItem>
       </PaginationContent>
@@ -78,27 +81,30 @@ function DesktopPagination({
 }) {
   const allPages = generatePagination(currentPage, totalPages)
 
+  const noPrev = currentPage <= 1
+  const noNext = currentPage >= totalPages
+
   return (
     <Pagination className="max-lg:hidden">
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
             href={createPageUrl(currentPage - 1)}
-            className={currentPage <= 1 ? "pointer-events-none" : ""}
-            aria-disabled={currentPage <= 1}
-            tabIndex={currentPage <= 1 ? -1 : undefined}
+            className={cn(noPrev && "pointer-events-none")}
+            aria-disabled={noPrev}
+            tabIndex={noPrev ? -1 : undefined}
           />
         </PaginationItem>
         {allPages.map((page, index) => {
           return (
-            <PaginationItem key={`${page}-${index}`}>
+            <PaginationItem key={`${page}-${index}-mobile`}>
               {page !== "..." ? (
                 <PaginationLink
                   href={createPageUrl(page)}
                   isActive={currentPage === page}
                   className={cn(
                     "min-w-9 w-fit px-2.5",
-                    currentPage === page ? "pointer-events-none" : ""
+                    currentPage === page && "pointer-events-none"
                   )}
                 >
                   {page}
@@ -112,9 +118,9 @@ function DesktopPagination({
         <PaginationItem>
           <PaginationNext
             href={createPageUrl(currentPage + 1)}
-            className={currentPage >= totalPages ? "pointer-events-none" : ""}
-            aria-disabled={currentPage >= totalPages}
-            tabIndex={currentPage >= totalPages ? -1 : undefined}
+            className={cn(noNext && "pointer-events-none")}
+            aria-disabled={noNext}
+            tabIndex={noNext ? -1 : undefined}
           />
         </PaginationItem>
       </PaginationContent>
@@ -134,11 +140,13 @@ export default function PaginationController({
   const createPageUrl = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams)
 
-    pageNumber.toString() !== "1"
-      ? params.set("page", pageNumber.toString())
-      : params.delete("page")
-
-    return `${pathname}?${params.toString()}`
+    if (pageNumber.toString() !== "1") {
+      params.set("page", pageNumber.toString())
+      return `${pathname}?${params.toString()}`
+    } else {
+      params.delete("page")
+      return pathname
+    }
   }
 
   return (
