@@ -44,11 +44,14 @@ export async function getRecipes({
   const query = `#graphql
     query Recipes(
       $limit: Int
+      $skip: Int
     ) {
       recipeCollection(
         limit: $limit
+        skip: $skip
         preview: ${isDraftMode ? "true" : "false"}
       ) {
+        total
         items {
           sys {
             id
@@ -186,6 +189,7 @@ export async function getRecipesByTagSlug({
           title
           linkedFrom {
             recipeCollection(limit: $limit, skip: $skip) {
+              total
               items {
                 sys {
                   id
