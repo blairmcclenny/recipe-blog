@@ -149,6 +149,10 @@ export default function PaginationController({
     }
   }
 
+  if (totalPages <= 1) {
+    return null
+  }
+
   return (
     <>
       <MobilePagination

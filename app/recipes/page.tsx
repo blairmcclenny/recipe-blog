@@ -5,35 +5,37 @@ import { TypographyH1 } from "@/components/typography"
 import RecipeGrid from "@/components/recipeGrid"
 import PaginationController from "@/components/paginationController"
 
-type Params = {
-  page?: number
-}
-
-export default async function Page({ searchParams }: { searchParams: Params }) {
-  const { isEnabled } = draftMode()
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: { page?: number }
+}) {
   const { page } = searchParams
+  const { isEnabled } = draftMode()
 
-  const recipesPerPage = 20
-  const skip = page ? (page - 1) * recipesPerPage : 0
+  const limit = 20
+  const skip = page ? (page - 1) * limit : 0
 
   const data = await getRecipes({
-    limit: recipesPerPage,
+    limit,
     skip,
     isDraftMode: isEnabled,
   })
 
   const recipes = data?.recipeCollection?.items
-  const totalPages = Math.ceil(data?.recipeCollection?.total / recipesPerPage)
+  const totalPages = Math.ceil(data?.recipeCollection?.total / limit)
 
-  if (!recipes || !totalPages) {
+  if (!recipes || !recipes?.length) {
     notFound()
   }
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto px-4 h-full">
       <TypographyH1>Recipes</TypographyH1>
+      <div className="flex flex-col justify-between h-full">
       <RecipeGrid recipes={recipes} />
       <PaginationController totalPages={totalPages} />
+      </div>
     </div>
   )
 }

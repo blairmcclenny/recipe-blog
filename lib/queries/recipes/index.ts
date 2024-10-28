@@ -189,6 +189,7 @@ export async function getRecipesByTagSlug({
           title
           linkedFrom {
             recipeCollection(limit: $limit, skip: $skip) {
+              total
               items {
                 sys {
                   id

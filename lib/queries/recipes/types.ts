@@ -70,6 +70,7 @@ export type RecipesByTagSlug = {
       title: string
       linkedFrom: {
         recipeCollection: {
+          total: number
           items: {
             sys: {
               id: string
