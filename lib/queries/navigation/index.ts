@@ -5,7 +5,7 @@ export async function getNavigation({
   title,
   isDraftMode = false,
 }: {
-  title: "Header" | "Footer"
+  title: "Header" | "Header v2" | "Footer"
   isDraftMode?: boolean
 }) {
   const query = `#graphql
@@ -15,42 +15,34 @@ export async function getNavigation({
         where: $where
       ) {
         items {
-          linksCollection(limit: 10) {
+          linksCollection {
             items {
-              type: __typename
-              ... on LinkContent {
+              ... on Link {
                 sys {
                   id
                 }
                 text
-                content {
+                type
+                url
+                anchor
+                entry {
+                  type: __typename
                   ... on Event {
-                    type: __typename
+                    slug
+                  }
+                  ... on EventTag {
                     slug
                   }
                   ... on Page {
-                    type: __typename
                     slug
                   }
                   ... on Recipe {
-                    type: __typename
+                    slug
+                  }
+                  ... on RecipeTag {
                     slug
                   }
                 }
-              }
-              ... on LinkIndex {
-                sys {
-                  id
-                }
-                text
-                indexPage
-              }
-              ... on LinkUrl {
-                sys {
-                  id
-                }
-                text
-                url
               }
             }
           }
