@@ -5,7 +5,7 @@ export async function getNavigation({
   title,
   isDraftMode = false,
 }: {
-  title: "Header Link Breakout" | "Footer Link Breakout"
+  title: "Header" | "Footer"
   isDraftMode?: boolean
 }) {
   const query = `#graphql

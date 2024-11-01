@@ -16,7 +16,7 @@ import Link from "@/components/link"
 import NextLink from "next/link"
 
 export default async function Header() {
-  const data = await getNavigation({ title: "Header Link Breakout", isDraftMode: false })
+  const data = await getNavigation({ title: "Header", isDraftMode: false })
   const links = data?.navigationCollection?.items?.[0]?.linksCollection?.items
 
   //   const isScrolled = useWindowScroll(50)
