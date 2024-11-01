@@ -12,8 +12,7 @@ const indexPagePathMap = {
   Events: "/events",
 }
 
-function getIndexPagePath(indexPage: IndexPage | undefined) {
-  if (!indexPage) return ""
+function getIndexPagePath(indexPage: IndexPage) {
   return indexPagePathMap[indexPage]
 }
 
@@ -25,8 +24,7 @@ const entryTypePathMap = {
   RecipeTag: "/recipes/tags",
 }
 
-function getEntryPath(entry: Entry | undefined) {
-  if (!entry) return ""
+function getEntryPath(entry: Entry) {
   if (entry.slug === "home") return "/"
   return `${entryTypePathMap[entry.type]}/${entry.slug}`
 }
@@ -42,17 +40,17 @@ export default function Link({
     case "LinkUrl":
       return (
         <a
-          href={link?.url || ""}
+          href={link.url}
           target="_blank"
           rel="noopener noreferrer"
           {...props}
         />
       )
     case "LinkAnchor":
-      return <a href={`#${convertStringToHtmlId(link?.anchor)}`} {...props} />
+      return <a href={`#${convertStringToHtmlId(link.anchor)}`} {...props} />
     case "LinkContent":
-      return <NextLink href={getEntryPath(link?.entry)} {...props} />
+      return <NextLink href={getEntryPath(link.entry)} {...props} />
     case "LinkIndexPage":
-      return <NextLink href={getIndexPagePath(link?.indexPage)} {...props} />
+      return <NextLink href={getIndexPagePath(link.indexPage)} {...props} />
   }
 }

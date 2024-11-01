@@ -5,9 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const convertStringToHtmlId = (str: string | undefined) => {
-  if (!str) return ""
-
+export const convertStringToHtmlId = (str: string) => {
   return str
     .toLowerCase()
     .replace(/[^a-z0-9-_:]/g, "-")

@@ -13,10 +13,10 @@ export type Link = {
     id: string
   }
   text: string
-  anchor?: string
-  entry?: Entry
-  indexPage?: IndexPage
-  url?: string
+  anchor: string
+  entry: Entry
+  indexPage: IndexPage
+  url: string
 }
 
 export type Navigation = {
