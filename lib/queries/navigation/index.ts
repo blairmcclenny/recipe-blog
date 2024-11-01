@@ -17,14 +17,19 @@ export async function getNavigation({
         items {
           linksCollection {
             items {
-              ... on Link {
+              type: __typename
+              ... on LinkAnchor {
                 sys {
                   id
                 }
                 text
-                type
-                url
                 anchor
+              }
+              ... on LinkContent {
+                sys {
+                  id
+                }
+                text
                 entry {
                   type: __typename
                   ... on Event {
@@ -43,6 +48,20 @@ export async function getNavigation({
                     slug
                   }
                 }
+              }
+              ... on LinkIndexPage {
+                sys {
+                  id
+                }
+                text
+                indexPage: type
+              }
+              ... on LinkUrl {
+                sys {
+                  id
+                }
+                text
+                url
               }
             }
           }

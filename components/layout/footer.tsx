@@ -4,7 +4,10 @@ import Link from "@/components/link"
 import SocialMedia from "@/components/social-media"
 
 export default async function Footer() {
-  const data = await getNavigation({ title: "Footer", isDraftMode: false })
+  const data = await getNavigation({
+    title: "Footer",
+    isDraftMode: false,
+  })
   const links = data?.navigationCollection?.items?.[0]?.linksCollection?.items
 
   return (
