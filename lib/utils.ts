@@ -13,6 +13,7 @@ export const convertStringToHtmlId = (str: string | undefined) => {
     .replace(/[^a-z0-9-_:]/g, "-")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "")
+    .replace(/^[^a-z]+|[^a-z0-9-_:]+/g, "")
 }
 
 export const generatePagination = (currentPage: number, totalPages: number) => {
