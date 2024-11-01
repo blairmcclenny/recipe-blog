@@ -5,7 +5,7 @@ export async function getNavigation({
   title,
   isDraftMode = false,
 }: {
-  title: "Header" | "Header v2" | "Footer"
+  title: "Header" | "Footer"
   isDraftMode?: boolean
 }) {
   const query = `#graphql
