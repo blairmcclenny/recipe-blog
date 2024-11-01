@@ -1,7 +1,7 @@
+import React from "react"
 import NextLink from "next/link"
 import { EntryType, Link as LinkProps } from "@/lib/queries/navigation/types"
 import { convertStringToHtmlId } from "@/lib/utils"
-import React from "react"
 
 function getEntryTypePath(entryType: EntryType) {
   switch (entryType) {
@@ -22,7 +22,7 @@ function getEntryHref(
   entryType: EntryType | undefined,
   slug: string | undefined
 ) {
-  if (!slug || !entryType) return
+  if (!slug || !entryType) return ""
 
   return `${getEntryTypePath(entryType)}/${slug}`
 }
@@ -38,20 +38,18 @@ export default function Link({
     case "URL":
       return (
         <a
-          href={link?.url || "#"}
+          href={link?.url || ""}
           target="_blank"
           rel="noopener noreferrer"
           {...props}
         />
       )
     case "Anchor":
-      return (
-        <a href={`#${convertStringToHtmlId(link?.anchor)}` || "#"} {...props} />
-      )
+      return <a href={`#${convertStringToHtmlId(link?.anchor)}`} {...props} />
     case "Entry":
       return (
         <NextLink
-          href={getEntryHref(link.entry?.type, link.entry?.slug) || "#"}
+          href={getEntryHref(link.entry?.type, link.entry?.slug)}
           {...props}
         />
       )

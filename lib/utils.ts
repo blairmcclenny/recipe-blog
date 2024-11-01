@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const convertStringToHtmlId = (str: string | undefined) => {
-  if (!str) return
+  if (!str) return ""
 
   return str
     .toLowerCase()
