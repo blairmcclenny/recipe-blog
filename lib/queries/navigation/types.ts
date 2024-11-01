@@ -1,17 +1,22 @@
 export type EntryType = "Event" | "EventTag" | "Page" | "Recipe" | "RecipeTag"
 
+export type Entry = {
+  type: EntryType
+  slug: string
+}
+
+export type IndexPage = "Recipes" | "Events"
+
 export type Link = {
+  type: string
   sys: {
     id: string
   }
   text: string
-  type: "URL" | "Anchor" | "Entry" | "Recipes" | "Events"
-  url?: string
   anchor?: string
-  entry?: {
-    type: EntryType
-    slug: string
-  }
+  entry?: Entry
+  indexPage?: IndexPage
+  url?: string
 }
 
 export type Navigation = {
