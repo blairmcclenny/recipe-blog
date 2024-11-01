@@ -1,30 +1,34 @@
 import React from "react"
 import NextLink from "next/link"
-import { EntryType, Link as LinkProps } from "@/lib/queries/navigation/types"
+import {
+  Entry,
+  IndexPage,
+  Link as LinkProps,
+} from "@/lib/queries/navigation/types"
 import { convertStringToHtmlId } from "@/lib/utils"
 
-function getEntryTypePath(entryType: EntryType) {
-  switch (entryType) {
-    case "Event":
-      return "/events"
-    case "EventTag":
-      return "/events/tags"
-    case "Page":
-      return ""
-    case "Recipe":
-      return "/recipes"
-    case "RecipeTag":
-      return "/recipes/tags"
-  }
+const indexPagePathMap = {
+  Recipes: "/recipes",
+  Events: "/events",
 }
 
-function getEntryHref(
-  entryType: EntryType | undefined,
-  slug: string | undefined
-) {
-  if (!slug || !entryType) return ""
+function getIndexPagePath(indexPage: IndexPage | undefined) {
+  if (!indexPage) return ""
+  return indexPagePathMap[indexPage]
+}
 
-  return `${getEntryTypePath(entryType)}/${slug}`
+const entryTypePathMap = {
+  Event: "/events",
+  EventTag: "/events/tags",
+  Page: "",
+  Recipe: "/recipes",
+  RecipeTag: "/recipes/tags",
+}
+
+function getEntryPath(entry: Entry | undefined) {
+  if (!entry) return ""
+  if (entry.slug === "home") return "/"
+  return `${entryTypePathMap[entry.type]}/${entry.slug}`
 }
 
 export default function Link({
@@ -35,7 +39,7 @@ export default function Link({
   children: React.ReactNode
 }) {
   switch (link.type) {
-    case "URL":
+    case "LinkUrl":
       return (
         <a
           href={link?.url || ""}
@@ -44,18 +48,11 @@ export default function Link({
           {...props}
         />
       )
-    case "Anchor":
+    case "LinkAnchor":
       return <a href={`#${convertStringToHtmlId(link?.anchor)}`} {...props} />
-    case "Entry":
-      return (
-        <NextLink
-          href={getEntryHref(link.entry?.type, link.entry?.slug)}
-          {...props}
-        />
-      )
-    case "Recipes":
-      return <NextLink href={`/recipes`} {...props} />
-    case "Events":
-      return <NextLink href={`/events`} {...props} />
+    case "LinkContent":
+      return <NextLink href={getEntryPath(link?.entry)} {...props} />
+    case "LinkIndexPage":
+      return <NextLink href={getIndexPagePath(link?.indexPage)} {...props} />
   }
 }
