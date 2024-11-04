@@ -111,6 +111,65 @@ export async function getRecipeBySlug({
             }
             details {
               json
+              links {
+                entries {
+                  block {
+                    __typename
+                    ... on LinkUrl {
+                      sys {
+                        id
+                      }
+                      linkText: text
+                      linkUrl: url
+                    }
+                    ... on LinkAnchor {
+                      sys {
+                        id
+                      }
+                      linkText: text
+                      linkAnchor: anchor
+                    }
+                    ... on LinkContent {
+                      sys {
+                        id
+                      }
+                      linkText: text
+                      linkContent: entry {
+                        __typename
+                        ... on Event {
+                          slug
+                        }
+                        ... on EventTag {
+                          slug
+                        }
+                        ... on Page {
+                          slug
+                        }
+                        ... on Recipe {
+                          slug
+                        }
+                        ... on RecipeTag {
+                          slug
+                        }
+                      }
+                    }
+                    ... on LinkIndexPage {
+                      sys {
+                        id
+                      }
+                      linkText: text
+                      linkIndexPage: type
+                    }
+                    ... on Quote {
+                      sys {
+                        id
+                      }
+                      quote
+                      citation
+                    }
+                  }
+                }
+              }
             }
             tagsCollection {
               items {

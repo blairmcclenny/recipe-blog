@@ -1,3 +1,4 @@
+import { Links } from "@/lib/types/links"
 import { Document } from "@contentful/rich-text-types"
 
 export type RecipeSlugs = {
@@ -42,6 +43,7 @@ export type RecipeBySlug = {
       }
       details: {
         json: Document
+        links: Links
       }
       tagsCollection: {
         items: {

@@ -2,7 +2,7 @@ import { getRecipeBySlug, getRecipeSlugs } from "@/lib/queries/recipes"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
 import { TypographyH1, TypographyP } from "@/components/typography"
-import renderRichText from "@/components/richText"
+import renderRichText, { recipeOptions } from "@/components/rich-text"
 
 export async function generateStaticParams() {
   const data = await getRecipeSlugs()
@@ -38,7 +38,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
             day: "numeric",
           })}
       </div>
-      <div>{renderRichText(recipe.details?.json)}</div>
+      <div>
+        {renderRichText(
+          recipe.details.json,
+          recipeOptions(recipe.details.links)
+        )}
+      </div>
     </div>
   )
 }
