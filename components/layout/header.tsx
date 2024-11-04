@@ -62,7 +62,7 @@ export default async function Header() {
               {links?.map((link) => (
                 <li key={link.sys.id}>
                   <Link link={link}>
-                    {link.text}
+                    {link.linkText}
                   </Link>
                 </li>
               ))}

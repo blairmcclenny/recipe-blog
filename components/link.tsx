@@ -1,18 +1,21 @@
 import React from "react"
 import NextLink from "next/link"
-import {
-  Entry,
-  IndexPage,
-  Link as LinkProps,
-} from "@/lib/queries/navigation/types"
 import { convertStringToHtmlId } from "@/lib/utils"
+import {
+  NavigationLinkAnchor,
+  NavigationLinkContent,
+  NavigationLinkContentEntry,
+  NavigationLinkIndexPage,
+  NavigationLinkIndexPageType,
+  NavigationLinkUrl,
+} from "@/lib/types/navigation"
 
 const indexPagePathMap = {
   Recipes: "/recipes",
   Events: "/events",
 }
 
-function getIndexPagePath(indexPage: IndexPage) {
+function getIndexPagePath(indexPage: NavigationLinkIndexPageType) {
   return indexPagePathMap[indexPage]
 }
 
@@ -24,33 +27,38 @@ const entryTypePathMap = {
   RecipeTag: "/recipes/tags",
 }
 
-function getEntryPath(entry: Entry) {
+function getEntryPath(entry: NavigationLinkContentEntry) {
   if (entry.slug === "home") return "/"
-  return `${entryTypePathMap[entry.type]}/${entry.slug}`
+  return `${entryTypePathMap[entry.__typename]}/${entry.slug}`
 }
 
 export default function Link({
   link,
   ...props
 }: {
-  link: LinkProps
+  link: NavigationLinkAnchor &
+    NavigationLinkUrl &
+    NavigationLinkContent &
+    NavigationLinkIndexPage
   children: React.ReactNode
 }) {
-  switch (link.type) {
+  switch (link.__typename) {
     case "LinkUrl":
       return (
         <a
-          href={link.url}
+          href={link.linkUrl}
           target="_blank"
           rel="noopener noreferrer"
           {...props}
         />
       )
     case "LinkAnchor":
-      return <a href={`#${convertStringToHtmlId(link.anchor)}`} {...props} />
+      return (
+        <a href={`#${convertStringToHtmlId(link.linkAnchor)}`} {...props} />
+      )
     case "LinkContent":
-      return <NextLink href={getEntryPath(link.entry)} {...props} />
+      return <NextLink href={getEntryPath(link.linkContent)} {...props} />
     case "LinkIndexPage":
-      return <NextLink href={getIndexPagePath(link.indexPage)} {...props} />
+      return <NextLink href={getIndexPagePath(link.linkIndexPage)} {...props} />
   }
 }

@@ -5,7 +5,14 @@ import {
   RecipesByTagSlug,
   RecipeSlugs,
   RecipeTagSlugs,
-} from "./types"
+} from "@/lib/types/recipes"
+
+import {
+  linkAnchorFields,
+  linkContentFields,
+  linkIndexPageFields,
+  linkUrlFields,
+} from "@/lib/queries/navigation/fragments"
 
 export async function getRecipeSlugs(isDraftMode = false) {
   const query = `#graphql
@@ -114,53 +121,12 @@ export async function getRecipeBySlug({
               links {
                 entries {
                   block {
-                    __typename
-                    ... on LinkUrl {
-                      sys {
-                        id
-                      }
-                      linkText: text
-                      linkUrl: url
-                    }
-                    ... on LinkAnchor {
-                      sys {
-                        id
-                      }
-                      linkText: text
-                      linkAnchor: anchor
-                    }
-                    ... on LinkContent {
-                      sys {
-                        id
-                      }
-                      linkText: text
-                      linkContent: entry {
-                        __typename
-                        ... on Event {
-                          slug
-                        }
-                        ... on EventTag {
-                          slug
-                        }
-                        ... on Page {
-                          slug
-                        }
-                        ... on Recipe {
-                          slug
-                        }
-                        ... on RecipeTag {
-                          slug
-                        }
-                      }
-                    }
-                    ... on LinkIndexPage {
-                      sys {
-                        id
-                      }
-                      linkText: text
-                      linkIndexPage: type
-                    }
+                    ...linkUrlFields
+                    ...linkAnchorFields
+                    ...linkContentFields
+                    ...linkIndexPageFields
                     ... on Quote {
+                      __typename
                       sys {
                         id
                       }
@@ -183,6 +149,10 @@ export async function getRecipeBySlug({
           }
         }
       }
+      ${linkUrlFields}
+      ${linkAnchorFields}
+      ${linkContentFields}
+      ${linkIndexPageFields}
     `
 
   const data = await fetchGraphQL<RecipeBySlug>({
