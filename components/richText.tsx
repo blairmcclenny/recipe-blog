@@ -1,7 +1,10 @@
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
-import { BLOCKS, Node } from "@contentful/rich-text-types"
 import {
-  // TypographyBlockquote,
+  documentToReactComponents,
+  Options,
+} from "@contentful/rich-text-react-renderer"
+import { BLOCKS, Document, Node } from "@contentful/rich-text-types"
+import {
+  TypographyBlockquote,
   TypographyH1,
   TypographyH2,
   TypographyH3,
@@ -16,55 +19,47 @@ import {
 // TODO
 // Audit and update types (richText, options)
 
-const defaultOptions = () => {
+const defaultOptions = (): Options => {
   return {
     renderMark: {},
     renderNode: {
-      [BLOCKS.HEADING_1]: (
-        node: Node,
-        children: React.ReactNode
-      ) => <TypographyH1>{children}</TypographyH1>,
-      [BLOCKS.HEADING_2]: (
-        node: Node,
-        children: React.ReactNode
-      ) => <TypographyH2>{children}</TypographyH2>,
-      [BLOCKS.HEADING_3]: (
-        node: Node,
-        children: React.ReactNode
-      ) => <TypographyH3>{children}</TypographyH3>,
-      [BLOCKS.HEADING_4]: (
-        node: Node,
-        children: React.ReactNode
-      ) => <TypographyH4>{children}</TypographyH4>,
-      [BLOCKS.PARAGRAPH]: (
-        node: Node,
-        children: React.ReactNode
-      ) => <TypographyP>{children}</TypographyP>,
-      [BLOCKS.UL_LIST]: (
-        node: Node,
-        children: React.ReactNode
-      ) => <TypographyUL>{children}</TypographyUL>,
-      [BLOCKS.OL_LIST]: (
-        node: Node,
-        children: React.ReactNode
-      ) => <TypographyOL>{children}</TypographyOL>,
-      [BLOCKS.LIST_ITEM]: (
-        node: Node,
-        children: React.ReactNode
-      ) => <TypographyLI>{children}</TypographyLI>,
+      [BLOCKS.HEADING_1]: (node: Node, children: React.ReactNode) => (
+        <TypographyH1>{children}</TypographyH1>
+      ),
+      [BLOCKS.HEADING_2]: (node: Node, children: React.ReactNode) => (
+        <TypographyH2>{children}</TypographyH2>
+      ),
+      [BLOCKS.HEADING_3]: (node: Node, children: React.ReactNode) => (
+        <TypographyH3>{children}</TypographyH3>
+      ),
+      [BLOCKS.HEADING_4]: (node: Node, children: React.ReactNode) => (
+        <TypographyH4>{children}</TypographyH4>
+      ),
+      [BLOCKS.PARAGRAPH]: (node: Node, children: React.ReactNode) => (
+        <TypographyP>{children}</TypographyP>
+      ),
+      [BLOCKS.UL_LIST]: (node: Node, children: React.ReactNode) => (
+        <TypographyUL>{children}</TypographyUL>
+      ),
+      [BLOCKS.OL_LIST]: (node: Node, children: React.ReactNode) => (
+        <TypographyOL>{children}</TypographyOL>
+      ),
+      [BLOCKS.LIST_ITEM]: (node: Node, children: React.ReactNode) => (
+        <TypographyLI>{children}</TypographyLI>
+      ),
       [BLOCKS.HR]: () => <TypographyHR />,
-      // [BLOCKS.QUOTE]: (node: React.ReactNode, children: React.ReactElement) => (
-      //   <TypographyBlockquote>{children}</TypographyBlockquote>
-      // ),
+      [BLOCKS.QUOTE]: (node: Node, children: React.ReactNode) => (
+        <TypographyBlockquote>{children}</TypographyBlockquote>
+      ),
     },
   }
 }
 
 export default function renderRichText(
-  richText: any,
-  options: any = defaultOptions
+  richText: Document,
+  options: Options = defaultOptions()
 ) {
   if (!richText) return null
 
-  return documentToReactComponents(richText, options())
+  return documentToReactComponents(richText, options)
 }
