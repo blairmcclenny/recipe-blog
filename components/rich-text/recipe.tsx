@@ -5,6 +5,8 @@ import {
   RichTextLinkRecipe,
   RichTextLinksRecipe,
 } from "@/lib/types/rich-text-links"
+import Link from "@/components/link"
+import { Button } from "@/components/ui/button"
 
 export const options = (links: RichTextLinksRecipe): Options => {
   const entryMap = new Map()
@@ -20,11 +22,18 @@ export const options = (links: RichTextLinksRecipe): Options => {
       [BLOCKS.EMBEDDED_ENTRY]: (node: Node) => {
         const entry: RichTextLinkRecipe = entryMap.get(node.data.target.sys.id)
 
-        if (entry.__typename === "LinkUrl") {
+        if (
+          entry.__typename === "LinkUrl" ||
+          entry.__typename === "LinkAnchor" ||
+          entry.__typename === "LinkContent" ||
+          entry.__typename === "LinkIndexPage"
+        ) {
           return (
-            <a href={entry.linkUrl} target="_blank" rel="noopener noreferrer">
-              {entry.linkText}
-            </a>
+            <div className="text-center">
+              <Link link={entry}>
+                <Button>{entry.linkText}</Button>
+              </Link>
+            </div>
           )
         }
       },
