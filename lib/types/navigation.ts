@@ -1,22 +1,18 @@
-type NavigationLinkType =
-  | "LinkUrl"
-  | "LinkAnchor"
-  | "LinkContent"
-  | "LinkIndexPage"
+type linkType = "LinkUrl" | "LinkAnchor" | "LinkContent" | "LinkIndexPage"
 
-type NavigationLinkBase = {
-  __typename: NavigationLinkType
+type linkBase = {
+  __typename: linkType
   sys: {
     id: string
   }
   linkText: string
 }
 
-export type NavigationLinkUrl = NavigationLinkBase & {
+export type linkUrl = linkBase & {
   linkUrl: string
 }
 
-export type NavigationLinkAnchor = NavigationLinkBase & {
+export type linkAnchor = linkBase & {
   linkAnchor: string
 }
 
@@ -27,29 +23,26 @@ type NavigationContentType =
   | "Recipe"
   | "RecipeTag"
 
-export type NavigationLinkContentEntry = {
+export type linkContentEntry = {
   __typename: NavigationContentType
   slug: string
 }
 
-export type NavigationLinkContent = NavigationLinkBase & {
-  linkContent: NavigationLinkContentEntry
+export type linkContent = linkBase & {
+  linkContent: linkContentEntry
 }
 
-export type NavigationLinkIndexPageType = "Recipes" | "Events"
+export type linkIndexPageType = "Recipes" | "Events"
 
-export type NavigationLinkIndexPage = NavigationLinkBase & {
-  linkIndexPage: NavigationLinkIndexPageType
+export type linkIndexPage = linkBase & {
+  linkIndexPage: linkIndexPageType
 }
 
 export type Navigation = {
   navigationCollection: {
     items: {
       linksCollection: {
-        items: (NavigationLinkUrl &
-          NavigationLinkAnchor &
-          NavigationLinkContent &
-          NavigationLinkIndexPage)[]
+        items: (linkUrl & linkAnchor & linkContent & linkIndexPage)[]
       }
     }[]
   }

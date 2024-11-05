@@ -2,12 +2,12 @@ import React from "react"
 import NextLink from "next/link"
 import { convertStringToHtmlId } from "@/lib/utils"
 import {
-  NavigationLinkAnchor,
-  NavigationLinkContent,
-  NavigationLinkContentEntry,
-  NavigationLinkIndexPage,
-  NavigationLinkIndexPageType,
-  NavigationLinkUrl,
+  linkAnchor,
+  linkContent,
+  linkContentEntry,
+  linkIndexPage,
+  linkIndexPageType,
+  linkUrl,
 } from "@/lib/types/navigation"
 
 const indexPagePathMap = {
@@ -15,7 +15,7 @@ const indexPagePathMap = {
   Events: "/events",
 }
 
-function getIndexPagePath(indexPage: NavigationLinkIndexPageType) {
+function getIndexPagePath(indexPage: linkIndexPageType) {
   return indexPagePathMap[indexPage]
 }
 
@@ -27,7 +27,7 @@ const entryTypePathMap = {
   RecipeTag: "/recipes/tags",
 }
 
-function getEntryPath(entry: NavigationLinkContentEntry) {
+function getEntryPath(entry: linkContentEntry) {
   if (entry.slug === "home") return "/"
   return `${entryTypePathMap[entry.__typename]}/${entry.slug}`
 }
@@ -36,10 +36,7 @@ export default function Link({
   link,
   ...props
 }: {
-  link: NavigationLinkAnchor &
-    NavigationLinkUrl &
-    NavigationLinkContent &
-    NavigationLinkIndexPage
+  link: linkAnchor & linkUrl & linkContent & linkIndexPage
   children: React.ReactNode
 }) {
   switch (link.__typename) {

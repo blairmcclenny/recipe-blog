@@ -1,14 +1,9 @@
-import {
-  NavigationLinkAnchor,
-  NavigationLinkContent,
-  NavigationLinkIndexPage,
-  NavigationLinkUrl,
-} from "./navigation"
+import { linkAnchor, linkContent, linkIndexPage, linkUrl } from "./navigation"
 
-export type RichTextLinkRecipe = NavigationLinkUrl &
-  NavigationLinkAnchor &
-  NavigationLinkContent &
-  NavigationLinkIndexPage
+export type RichTextLinkRecipe = linkUrl &
+  linkAnchor &
+  linkContent &
+  linkIndexPage
 
 export type RichTextLinksRecipe = {
   entries: {
