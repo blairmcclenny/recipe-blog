@@ -1,5 +1,5 @@
 import { fetchGraphQL } from "@/lib/api"
-import { SocialMedia } from "./types"
+import { SocialMedia } from "@/lib/types/social-media"
 
 export async function getSocialMedia({
   limit = 1,
