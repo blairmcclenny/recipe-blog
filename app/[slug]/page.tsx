@@ -1,4 +1,4 @@
-import renderRichText from "@/components/richText"
+import renderRichText from "@/components/rich-text"
 import { TypographyH1 } from "@/components/typography"
 import { getPages, getPageSlugs } from "@/lib/queries/pages"
 import { draftMode } from "next/headers"
