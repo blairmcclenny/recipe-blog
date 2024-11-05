@@ -5,7 +5,7 @@ import {
   linkContentFields,
   linkIndexPageFields,
   linkUrlFields,
-} from "./fragments"
+} from "@/lib/queries/navigation/fragments"
 
 export async function getNavigation({
   title,

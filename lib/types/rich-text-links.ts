@@ -1,4 +1,9 @@
-import { linkAnchor, linkContent, linkIndexPage, linkUrl } from "./navigation"
+import {
+  linkAnchor,
+  linkContent,
+  linkIndexPage,
+  linkUrl,
+} from "@/lib/types/navigation"
 
 export type RichTextLinkRecipe = linkUrl &
   linkAnchor &
