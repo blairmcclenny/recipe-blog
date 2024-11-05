@@ -5,7 +5,14 @@ import {
   RecipesByTagSlug,
   RecipeSlugs,
   RecipeTagSlugs,
-} from "./types"
+} from "@/lib/types/recipes"
+
+import {
+  linkAnchorFields,
+  linkContentFields,
+  linkIndexPageFields,
+  linkUrlFields,
+} from "@/lib/queries/navigation/fragments"
 
 export async function getRecipeSlugs(isDraftMode = false) {
   const query = `#graphql
@@ -111,6 +118,24 @@ export async function getRecipeBySlug({
             }
             details {
               json
+              links {
+                entries {
+                  block {
+                    ...linkUrlFields
+                    ...linkAnchorFields
+                    ...linkContentFields
+                    ...linkIndexPageFields
+                    ... on Quote {
+                      __typename
+                      sys {
+                        id
+                      }
+                      quote
+                      citation
+                    }
+                  }
+                }
+              }
             }
             tagsCollection {
               items {
@@ -124,6 +149,10 @@ export async function getRecipeBySlug({
           }
         }
       }
+      ${linkUrlFields}
+      ${linkAnchorFields}
+      ${linkContentFields}
+      ${linkIndexPageFields}
     `
 
   const data = await fetchGraphQL<RecipeBySlug>({

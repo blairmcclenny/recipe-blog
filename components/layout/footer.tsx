@@ -17,7 +17,7 @@ export default async function Footer() {
           <ul className="flex space-x-4">
             {links?.map((link) => (
               <li key={link.sys.id}>
-                <Link link={link}>{link.text}</Link>
+                <Link link={link}>{link.linkText}</Link>
               </li>
             ))}
           </ul>

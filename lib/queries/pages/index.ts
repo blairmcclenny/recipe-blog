@@ -1,5 +1,5 @@
 import { fetchGraphQL } from "@/lib/api"
-import { Pages, PageSlugs } from "./types"
+import { Pages, PageSlugs } from "@/lib/types/pages"
 
 export async function getPageSlugs(isDraftMode = false) {
   const query = `#graphql

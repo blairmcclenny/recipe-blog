@@ -1,19 +1,21 @@
 import React from "react"
 import NextLink from "next/link"
-import {
-  Entry,
-  IndexPage,
-  Link as LinkProps,
-} from "@/lib/queries/navigation/types"
 import { convertStringToHtmlId } from "@/lib/utils"
+import {
+  linkAnchor,
+  linkContent,
+  linkContentEntry,
+  linkIndexPage,
+  linkIndexPageType,
+  linkUrl,
+} from "@/lib/types/navigation"
 
 const indexPagePathMap = {
   Recipes: "/recipes",
   Events: "/events",
 }
 
-function getIndexPagePath(indexPage: IndexPage | undefined) {
-  if (!indexPage) return ""
+function getIndexPagePath(indexPage: linkIndexPageType) {
   return indexPagePathMap[indexPage]
 }
 
@@ -25,34 +27,35 @@ const entryTypePathMap = {
   RecipeTag: "/recipes/tags",
 }
 
-function getEntryPath(entry: Entry | undefined) {
-  if (!entry) return ""
+function getEntryPath(entry: linkContentEntry) {
   if (entry.slug === "home") return "/"
-  return `${entryTypePathMap[entry.type]}/${entry.slug}`
+  return `${entryTypePathMap[entry.__typename]}/${entry.slug}`
 }
 
 export default function Link({
   link,
   ...props
 }: {
-  link: LinkProps
+  link: linkAnchor & linkUrl & linkContent & linkIndexPage
   children: React.ReactNode
 }) {
-  switch (link.type) {
+  switch (link.__typename) {
     case "LinkUrl":
       return (
         <a
-          href={link?.url || ""}
+          href={link.linkUrl}
           target="_blank"
           rel="noopener noreferrer"
           {...props}
         />
       )
     case "LinkAnchor":
-      return <a href={`#${convertStringToHtmlId(link?.anchor)}`} {...props} />
+      return (
+        <a href={`#${convertStringToHtmlId(link.linkAnchor)}`} {...props} />
+      )
     case "LinkContent":
-      return <NextLink href={getEntryPath(link?.entry)} {...props} />
+      return <NextLink href={getEntryPath(link.linkContent)} {...props} />
     case "LinkIndexPage":
-      return <NextLink href={getIndexPagePath(link?.indexPage)} {...props} />
+      return <NextLink href={getIndexPagePath(link.linkIndexPage)} {...props} />
   }
 }
