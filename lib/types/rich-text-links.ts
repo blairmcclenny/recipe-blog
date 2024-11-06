@@ -1,14 +1,14 @@
 import {
-  linkAnchor,
-  linkContent,
-  linkIndexPage,
-  linkUrl,
+  LinkAnchor,
+  LinkContent,
+  LinkIndexPage,
+  LinkUrl,
 } from "@/lib/types/navigation"
 
-export type RichTextLinkRecipe = linkUrl &
-  linkAnchor &
-  linkContent &
-  linkIndexPage
+export type RichTextLinkRecipe = LinkUrl &
+  LinkAnchor &
+  LinkContent &
+  LinkIndexPage
 
 export type RichTextLinksRecipe = {
   entries: {
