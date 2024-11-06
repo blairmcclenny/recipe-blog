@@ -1,48 +1,43 @@
-type linkType = "LinkUrl" | "LinkAnchor" | "LinkContent" | "LinkIndexPage"
+type LinkType = "LinkUrl" | "LinkAnchor" | "LinkContent" | "LinkIndexPage"
 
-type linkBase = {
-  __typename: linkType
+type LinkBase = {
+  __typename: LinkType
   sys: {
     id: string
   }
   linkText: string
 }
 
-export type linkUrl = linkBase & {
+export type LinkUrl = LinkBase & {
   linkUrl: string
 }
 
-export type linkAnchor = linkBase & {
+export type LinkAnchor = LinkBase & {
   linkAnchor: string
 }
 
-type NavigationContentType =
-  | "Event"
-  | "EventTag"
-  | "Page"
-  | "Recipe"
-  | "RecipeTag"
+type ContentType = "Event" | "EventTag" | "Page" | "Recipe" | "RecipeTag"
 
-export type linkContentEntry = {
-  __typename: NavigationContentType
+export type LinkContentEntry = {
+  __typename: ContentType
   slug: string
 }
 
-export type linkContent = linkBase & {
-  linkContent: linkContentEntry
+export type LinkContent = LinkBase & {
+  linkContent: LinkContentEntry
 }
 
-export type linkIndexPageType = "Recipes" | "Events"
+export type LinkIndexPageType = "Recipes" | "Events"
 
-export type linkIndexPage = linkBase & {
-  linkIndexPage: linkIndexPageType
+export type LinkIndexPage = LinkBase & {
+  linkIndexPage: LinkIndexPageType
 }
 
 export type Navigation = {
   navigationCollection: {
     items: {
       linksCollection: {
-        items: (linkUrl & linkAnchor & linkContent & linkIndexPage)[]
+        items: (LinkUrl & LinkAnchor & LinkContent & LinkIndexPage)[]
       }
     }[]
   }
