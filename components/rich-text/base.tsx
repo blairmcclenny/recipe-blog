@@ -1,4 +1,4 @@
-import { BLOCKS, MARKS, Node } from "@contentful/rich-text-types"
+import { Block, BLOCKS, MARKS, Node } from "@contentful/rich-text-types"
 import {
   TypographyBlockquote,
   TypographyH1,
@@ -9,6 +9,10 @@ import {
   TypographyLI,
   TypographyOL,
   TypographyP,
+  TypographyTableWithBody,
+  TypographyTableCell,
+  TypographyTableHeader,
+  TypographyTableRow,
   TypographyUL,
 } from "@/components/typography"
 
@@ -48,6 +52,20 @@ export const nodesBase = {
     <TypographyLI>{children}</TypographyLI>
   ),
   [BLOCKS.HR]: () => <TypographyHR />,
+
+  [BLOCKS.TABLE]: (node: Node, children: React.ReactNode) => (
+    <TypographyTableWithBody>{children}</TypographyTableWithBody>
+  ),
+  [BLOCKS.TABLE_ROW]: (node: Node, children: React.ReactNode) => (
+    <TypographyTableRow>{children}</TypographyTableRow>
+  ),
+  [BLOCKS.TABLE_CELL]: (node: Node, children: React.ReactNode) => (
+    <TypographyTableCell>{children}</TypographyTableCell>
+  ),
+  [BLOCKS.TABLE_HEADER_CELL]: (node: Node, children: React.ReactNode) => (
+    <TypographyTableHeader>{children}</TypographyTableHeader>
+  ),
+
   [BLOCKS.QUOTE]: (node: Node, children: React.ReactNode) => (
     <TypographyBlockquote>{children}</TypographyBlockquote>
   ),
