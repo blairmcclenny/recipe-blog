@@ -1,4 +1,4 @@
-import { BLOCKS, Node } from "@contentful/rich-text-types"
+import { BLOCKS, MARKS, Node } from "@contentful/rich-text-types"
 import {
   TypographyBlockquote,
   TypographyH1,
@@ -12,7 +12,15 @@ import {
   TypographyUL,
 } from "@/components/typography"
 
-export const marksBase = {}
+export const marksBase = {
+  [MARKS.BOLD]: (text: React.ReactNode) => (
+    <strong className="font-bold">{text}</strong>
+  ),
+  [MARKS.ITALIC]: (text: React.ReactNode) => <em className="italic">{text}</em>,
+  [MARKS.UNDERLINE]: (text: React.ReactNode) => (
+    <u className="underline">{text}</u>
+  ),
+}
 
 export const nodesBase = {
   [BLOCKS.HEADING_1]: (node: Node, children: React.ReactNode) => (
