@@ -1,7 +1,3 @@
-// TODO:
-// Finish and modularize Table
-// Audit unused components (Lead, Large, Small, Muted)
-
 export function TypographyH1({
   children,
 }: Readonly<{
@@ -68,54 +64,83 @@ export function TypographyBlockquote({
   )
 }
 
-// export function TypographyTable({
-//   children,
-// }: Readonly<{
-//   children: React.ReactNode
-// }>) {
-//   return (
-//     <div className="my-6 w-full overflow-y-auto">
-//       <table className="w-full">
-//         <thead>
-//           <tr className="m-0 border-t p-0 even:bg-muted">
-//             <th className="border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right">
-//               King's Treasury
-//             </th>
-//             <th className="border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right">
-//               People's happiness
-//             </th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           <tr className="m-0 border-t p-0 even:bg-muted">
-//             <td className="border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right">
-//               Empty
-//             </td>
-//             <td className="border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right">
-//               Overflowing
-//             </td>
-//           </tr>
-//           <tr className="m-0 border-t p-0 even:bg-muted">
-//             <td className="border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right">
-//               Modest
-//             </td>
-//             <td className="border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right">
-//               Satisfied
-//             </td>
-//           </tr>
-//           <tr className="m-0 border-t p-0 even:bg-muted">
-//             <td className="border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right">
-//               Full
-//             </td>
-//             <td className="border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right">
-//               Ecstatic
-//             </td>
-//           </tr>
-//         </tbody>
-//       </table>
-//     </div>
-//   )
-// }
+export function TypographyTableWithBody({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <div className="my-6 w-full overflow-y-auto">
+      <table className="w-full">
+        <TypographyTableBody>{children}</TypographyTableBody>
+      </table>
+    </div>
+  )
+}
+
+export function TypographyTable({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <div className="my-6 w-full overflow-y-auto">
+      <table className="w-full">{children}</table>
+    </div>
+  )
+}
+
+export function TypographyTableHead({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <thead>
+      <tr className="m-0 border-t p-0 even:bg-muted">{children}</tr>
+    </thead>
+  )
+}
+
+export function TypographyTableBody({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return <tbody>{children}</tbody>
+}
+
+export function TypographyTableRow({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return <tr className="m-0 border-t p-0 first:bg-muted">{children}</tr>
+}
+
+export function TypographyTableHeader({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <th className="border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right">
+      {children}
+    </th>
+  )
+}
+
+export function TypographyTableCell({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <td className="border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right">
+      {children}
+    </td>
+  )
+}
 
 export function TypographyUL({
   children,
