@@ -1,6 +1,3 @@
-// TODO:
-// Finish and modularize Table
-
 export function TypographyH1({
   children,
 }: Readonly<{
