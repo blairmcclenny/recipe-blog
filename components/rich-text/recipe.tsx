@@ -7,6 +7,7 @@ import {
 } from "@/lib/types/rich-text-links"
 import Link from "@/components/link"
 import { Button } from "@/components/ui/button"
+import { TypographyBlockquote, TypographySmall } from "../typography"
 
 export const options = (links: RichTextLinksRecipe): Options => {
   const entryMap = new Map()
@@ -29,10 +30,21 @@ export const options = (links: RichTextLinksRecipe): Options => {
           entry.__typename === "LinkIndexPage"
         ) {
           return (
-            <div className="text-center">
-              <Link link={entry}>
-                <Button>{entry.linkText}</Button>
-              </Link>
+            <div className="my-6 w-full">
+              <Button asChild>
+                <Link link={entry}>{entry.linkText}</Link>
+              </Button>
+            </div>
+          )
+        }
+
+        if (entry.__typename === "Quote") {
+          return (
+            <div className="my-6 w-full">
+              <TypographyBlockquote>
+                <p>{entry.quote}</p>
+              </TypographyBlockquote>
+              <TypographySmall>{entry.citation}</TypographySmall>
             </div>
           )
         }

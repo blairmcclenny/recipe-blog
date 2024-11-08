@@ -1,7 +1,5 @@
-type LinkType = "LinkUrl" | "LinkAnchor" | "LinkContent" | "LinkIndexPage"
-
 type LinkBase = {
-  __typename: LinkType
+  __typename: string
   sys: {
     id: string
   }
