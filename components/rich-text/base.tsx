@@ -1,4 +1,4 @@
-import { Block, BLOCKS, MARKS, Node } from "@contentful/rich-text-types"
+import { BLOCKS, MARKS, Node } from "@contentful/rich-text-types"
 import {
   TypographyBlockquote,
   TypographyH1,
