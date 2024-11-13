@@ -120,6 +120,21 @@ export async function getRecipeBySlug({
               json
               links {
                 entries {
+                  hyperlink {
+                    __typename
+                    sys {
+                      id
+                    }
+                    ... on Recipe {
+                      slug
+                    }
+                    ... on Page {
+                      slug
+                    }
+                    ... on Event {
+                      slug
+                    }
+                  }
                   block {
                     ...linkUrlFields
                     ...linkAnchorFields

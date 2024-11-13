@@ -1,4 +1,4 @@
-import { BLOCKS, MARKS, Node } from "@contentful/rich-text-types"
+import { BLOCKS, INLINES, MARKS, Node } from "@contentful/rich-text-types"
 import {
   TypographyBlockquote,
   TypographyH1,
@@ -15,6 +15,7 @@ import {
   TypographyTableRow,
   TypographyUL,
 } from "@/components/typography"
+import Link from "next/link"
 
 export const marksBase = {
   [MARKS.BOLD]: (text: React.ReactNode) => (
@@ -24,6 +25,20 @@ export const marksBase = {
   [MARKS.UNDERLINE]: (text: React.ReactNode) => (
     <u className="underline">{text}</u>
   ),
+}
+
+export const inlinesBase = {
+  [INLINES.HYPERLINK]: (node: Node, children: React.ReactNode) => {
+    const href = node.data.uri
+
+    return href.startsWith("#") ? (
+      <Link href={href}>{children}</Link>
+    ) : (
+      <a href={href} target="_blank" rel="noopener noreferrer">
+        {children}
+      </a>
+    )
+  },
 }
 
 export const nodesBase = {
@@ -52,7 +67,6 @@ export const nodesBase = {
     <TypographyLI>{children}</TypographyLI>
   ),
   [BLOCKS.HR]: () => <TypographyHR />,
-
   [BLOCKS.TABLE]: (node: Node, children: React.ReactNode) => (
     <TypographyTableWithBody>{children}</TypographyTableWithBody>
   ),
@@ -65,7 +79,6 @@ export const nodesBase = {
   [BLOCKS.TABLE_HEADER_CELL]: (node: Node, children: React.ReactNode) => (
     <TypographyTableHeader>{children}</TypographyTableHeader>
   ),
-
   [BLOCKS.QUOTE]: (node: Node, children: React.ReactNode) => (
     <TypographyBlockquote>{children}</TypographyBlockquote>
   ),
