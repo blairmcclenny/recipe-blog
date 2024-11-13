@@ -6,14 +6,24 @@ import {
 } from "@/lib/types/navigation"
 import { Quote } from "@/lib/types/quotes"
 
-export type RichTextLinkRecipe = LinkUrl &
+export type RichTextBlockRecipe = LinkUrl &
   LinkAnchor &
   LinkContent &
   LinkIndexPage &
   Quote
 
+
+export type RichTextHyperlinkRecipe = {
+  __typename: string
+  sys: {
+    id: string
+  }
+  slug: string
+}
+
 export type RichTextLinksRecipe = {
   entries: {
-    block: RichTextLinkRecipe[]
+    hyperlink: RichTextHyperlinkRecipe[]
+    block: RichTextBlockRecipe[]
   }
 }
