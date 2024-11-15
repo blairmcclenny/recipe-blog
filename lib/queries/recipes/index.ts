@@ -119,6 +119,18 @@ export async function getRecipeBySlug({
             details {
               json
               links {
+                assets {
+                  block {
+                    sys {
+                      id
+                    }
+                    description
+                    contentType
+                    url
+                    width
+                    height
+                  }
+                }
                 entries {
                   hyperlink {
                     __typename
