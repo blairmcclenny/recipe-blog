@@ -2,6 +2,7 @@ import { Options } from "@contentful/rich-text-react-renderer"
 import { BLOCKS, INLINES, Node } from "@contentful/rich-text-types"
 import { inlinesBase, marksBase, nodesBase } from "@/components/rich-text/base"
 import {
+  RichTextAssetRecipe,
   RichTextBlockRecipe,
   RichTextHyperlinkRecipe,
   RichTextLinksRecipe,
@@ -10,13 +11,19 @@ import Link from "@/components/link"
 import NextLink from "next/link"
 import { Button } from "@/components/ui/button"
 import { TypographyBlockquote, TypographySmall } from "../typography"
+import Image from "next/image"
 
 export const options = (links: RichTextLinksRecipe): Options => {
+  const assetMap = new Map()
   const entryMap = new Map()
   const hyperlinkMap = new Map()
 
   for (const entry of links.entries.block) {
     entryMap.set(entry.sys.id, entry)
+  }
+
+  for (const asset of links.assets.block) {
+    assetMap.set(asset.sys.id, asset)
   }
 
   for (const hyperlink of links.entries.hyperlink) {
@@ -83,6 +90,23 @@ export const options = (links: RichTextLinksRecipe): Options => {
             )
           default:
             return <span>{children}</span>
+        }
+      },
+      [BLOCKS.EMBEDDED_ASSET]: (node: Node, next: React.ReactNode) => {
+        const asset: RichTextAssetRecipe = assetMap.get(node.data.target.sys.id)
+
+        switch (asset.contentType) {
+          case "image/png":
+            return (
+              <Image
+                src={asset.url}
+                width={asset.width}
+                height={asset.height}
+                alt={asset.description}
+              />
+            )
+          default:
+            return null
         }
       },
     },
