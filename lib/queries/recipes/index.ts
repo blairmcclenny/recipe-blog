@@ -65,7 +65,7 @@ export async function getRecipes({
           }
           title
           slug
-          image {
+          previewImage {
             description
             url
             width
@@ -252,7 +252,7 @@ export async function getRecipesByTagSlug({
                 }
                 title
                 slug
-                image {
+                previewImage {
                   description
                   url
                   width
