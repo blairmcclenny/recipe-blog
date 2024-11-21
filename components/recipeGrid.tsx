@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 import Image from "next/image"
+import { Badge } from "@/components/ui/badge"
 
 export default function RecipeGrid({
   recipes,
@@ -40,7 +41,11 @@ export default function RecipeGrid({
               ) : (
                 <div className="aspect-square bg-muted" />
               )}
+
               <CardHeader>
+                <div>
+                  <Badge variant="outline">Tag Name</Badge>
+                </div>
                 <CardTitle>{recipe.title}</CardTitle>
               </CardHeader>
             </Card>
