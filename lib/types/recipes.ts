@@ -18,7 +18,7 @@ export type Recipes = {
       }
       title: string
       slug: string
-      image: {
+      previewImage: {
         description: string
         url: string
         width: number
@@ -79,7 +79,7 @@ export type RecipesByTagSlug = {
             }
             title: string
             slug: string
-            image: {
+            previewImage: {
               description: string
               url: string
               width: number

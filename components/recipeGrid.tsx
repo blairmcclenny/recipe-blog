@@ -10,7 +10,7 @@ export default function RecipeGrid({
     sys: {
       id: string
     }
-    image?: {
+    previewImage?: {
       description: string
       url: string
       width: number
@@ -28,7 +28,11 @@ export default function RecipeGrid({
         {recipes.map((recipe) => (
           <Link href={`/recipes/${recipe.slug}`} key={recipe.sys.id}>
             <Card>
-              <img src={recipe?.image?.url} alt={recipe?.image?.description} />
+              <img
+                src={recipe?.previewImage?.url}
+                alt={recipe?.previewImage?.description}
+                className="aspect-square"
+              />
               <CardHeader>
                 <CardTitle>{recipe.title}</CardTitle>
               </CardHeader>
