@@ -40,7 +40,6 @@ export default function RecipeGrid({
               ) : (
                 <div className="aspect-square bg-muted" />
               )}
-
               <CardHeader>
                 <CardTitle>{recipe.title}</CardTitle>
               </CardHeader>
