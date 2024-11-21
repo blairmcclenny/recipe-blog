@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Card, CardHeader, CardTitle } from "@/components/ui/card"
+import Image from "next/image"
 
 export default function RecipeGrid({
   recipes,
@@ -28,11 +29,17 @@ export default function RecipeGrid({
         {recipes.map((recipe) => (
           <Link href={`/recipes/${recipe.slug}`} key={recipe.sys.id}>
             <Card>
-              <img
-                src={recipe?.previewImage?.url}
-                alt={recipe?.previewImage?.description}
-                className="aspect-square"
-              />
+              {recipe.previewImage ? (
+                <Image
+                  src={recipe.previewImage.url}
+                  alt={recipe.previewImage?.description}
+                  width={recipe.previewImage.width}
+                  height={recipe.previewImage.height}
+                  className="aspect-square"
+                />
+              ) : (
+                <div className="aspect-square bg-muted" />
+              )}
               <CardHeader>
                 <CardTitle>{recipe.title}</CardTitle>
               </CardHeader>
