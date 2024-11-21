@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Card, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 
@@ -43,11 +43,18 @@ export default function RecipeGrid({
               )}
 
               <CardHeader>
-                <div>
-                  <Badge variant="outline">Tag Name</Badge>
-                </div>
                 <CardTitle>{recipe.title}</CardTitle>
               </CardHeader>
+              <CardFooter>
+                <div>
+                  <Badge variant="outline">Tag Name</Badge>
+                  <Badge variant="outline">Tag Name</Badge>
+                  <Badge variant="outline">Tag Name</Badge>
+                  <Badge variant="outline">Tag Name</Badge>
+                  <Badge variant="outline">Tag Name</Badge>
+                  <Badge variant="outline">Tag Name</Badge>
+                </div>
+              </CardFooter>
             </Card>
           </Link>
         ))}
