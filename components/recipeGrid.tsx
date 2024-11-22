@@ -1,6 +1,7 @@
 import Link from "next/link"
-import { Card, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import Image from "next/image"
+import { Badge } from "@/components/ui/badge"
 
 export default function RecipeGrid({
   recipes,
@@ -17,6 +18,15 @@ export default function RecipeGrid({
       width: number
       height: number
     }
+    tagsCollection: {
+      items: {
+        sys: {
+          id: string
+        }
+        title: string
+        slug: string
+      }[]
+    }
   }[]
 }) {
   if (!recipes) {
@@ -25,14 +35,14 @@ export default function RecipeGrid({
 
   return (
     <div className="@container">
-      <div className="grid @lg:grid-cols-2 @2xl:grid-cols-3 @5xl:grid-cols-4 gap-4">
+      <div className="grid @lg:grid-cols-2 @2xl:grid-cols-3 @5xl:grid-cols-4 gap-6">
         {recipes.map((recipe) => (
-          <Link href={`/recipes/${recipe.slug}`} key={recipe.sys.id}>
-            <Card>
+          <Card key={recipe.sys.id}>
+            <Link href={`/recipes/${recipe.slug}`}>
               {recipe.previewImage ? (
                 <Image
                   src={recipe.previewImage.url}
-                  alt={recipe.previewImage?.description}
+                  alt={recipe.previewImage?.description || ""}
                   width={recipe.previewImage.width}
                   height={recipe.previewImage.height}
                   className="aspect-square"
@@ -40,11 +50,20 @@ export default function RecipeGrid({
               ) : (
                 <div className="aspect-square bg-muted" />
               )}
-              <CardHeader>
-                <CardTitle>{recipe.title}</CardTitle>
-              </CardHeader>
-            </Card>
-          </Link>
+            </Link>
+            <CardHeader>
+              <Link href={`/recipes/${recipe.slug}`}>
+                <CardTitle className="leading-tight">{recipe.title}</CardTitle>
+              </Link>
+            </CardHeader>
+            <CardFooter className="flex-wrap gap-1">
+              {recipe.tagsCollection.items.map((tag) => (
+                <Link href={`/recipes/tags/${tag.slug}`} key={tag.sys.id}>
+                  <Badge variant="outline">{tag.title}</Badge>
+                </Link>
+              ))}
+            </CardFooter>
+          </Card>
         ))}
       </div>
     </div>

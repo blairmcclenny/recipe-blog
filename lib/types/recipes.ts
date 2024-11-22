@@ -24,6 +24,15 @@ export type Recipes = {
         width: number
         height: number
       }
+      tagsCollection: {
+        items: {
+          sys: {
+            id: string
+          }
+          title: string
+          slug: string
+        }[]
+      }
     }[]
   }
 }
@@ -84,6 +93,15 @@ export type RecipesByTagSlug = {
               url: string
               width: number
               height: number
+            }
+            tagsCollection: {
+              items: {
+                sys: {
+                  id: string
+                }
+                title: string
+                slug: string
+              }[]
             }
           }[]
         }

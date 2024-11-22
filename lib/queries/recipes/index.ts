@@ -71,6 +71,15 @@ export async function getRecipes({
             width
             height
           }
+          tagsCollection {
+            items {
+              sys {
+                id
+              }
+              title
+              slug
+            }
+          }
         }
       }
     }
@@ -239,6 +248,7 @@ export async function getRecipesByTagSlug({
     ) {
       recipeTagCollection(
         where: $where
+        limit: 1
         preview: ${isDraftMode ? "true" : "false"}
       ) {
         items {
@@ -257,6 +267,15 @@ export async function getRecipesByTagSlug({
                   url
                   width
                   height
+                }
+                tagsCollection {
+                  items {
+                    sys {
+                      id
+                    }
+                    title
+                    slug
+                  }
                 }
               }
             }
