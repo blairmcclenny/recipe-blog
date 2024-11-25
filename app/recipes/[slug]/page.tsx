@@ -3,6 +3,8 @@ import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
 import { TypographyH1, TypographyP } from "@/components/typography"
 import renderRichText, { recipeOptions } from "@/components/rich-text"
+import { Badge } from "@/components/ui/badge"
+import Link from "next/link"
 
 export async function generateStaticParams() {
   const data = await getRecipeSlugs()
@@ -43,6 +45,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
           recipe.details.json,
           recipeOptions(recipe.details.links)
         )}
+      </div>
+      <div className="flex flex-wrap gap-1">
+        {recipe.tagsCollection.items.map((tag) => (
+          <Link href={`/recipes/tags/${tag.slug}`} key={tag.sys.id}>
+            <Badge variant="outline">{tag.title}</Badge>
+          </Link>
+        ))}
       </div>
     </div>
   )
