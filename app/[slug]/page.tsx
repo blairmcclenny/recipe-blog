@@ -1,5 +1,4 @@
 import renderRichText from "@/components/rich-text"
-import { TypographyH1 } from "@/components/typography"
 import { getPages, getPageSlugs } from "@/lib/queries/pages"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
@@ -29,7 +28,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div className="container mx-auto px-4 max-w-4xl">
-      <TypographyH1>{page.title}</TypographyH1>
       <div>{renderRichText(page.details.json)}</div>
     </div>
   )
