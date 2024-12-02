@@ -28,7 +28,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div className="container mx-auto px-4 max-w-4xl">
-      <div>{renderRichText(page.details.json)}</div>
+      {renderRichText(page.details.json)}
     </div>
   )
 }
