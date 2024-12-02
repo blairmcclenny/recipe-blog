@@ -6,7 +6,7 @@ import {
 } from "@/lib/types/navigation"
 import { Quote } from "@/lib/types/quotes"
 
-export type RichTextAssetRecipe = {
+export type RichTextAsset = {
   sys: {
     id: string
   }
@@ -17,13 +17,13 @@ export type RichTextAssetRecipe = {
   height: number
 }
 
-export type RichTextBlockRecipe = LinkUrl &
+export type RichTextBlock = LinkUrl &
   LinkAnchor &
   LinkContent &
   LinkIndexPage &
   Quote
 
-export type RichTextHyperlinkRecipe = {
+export type RichTextHyperlink = {
   __typename: string
   sys: {
     id: string
@@ -31,12 +31,12 @@ export type RichTextHyperlinkRecipe = {
   slug: string
 }
 
-export type RichTextLinksRecipe = {
+export type RichTextLinks = {
   assets: {
-    block: RichTextAssetRecipe[]
+    block: RichTextAsset[]
   }
   entries: {
-    hyperlink: RichTextHyperlinkRecipe[]
-    block: RichTextBlockRecipe[]
+    hyperlink: RichTextHyperlink[]
+    block: RichTextBlock[]
   }
 }

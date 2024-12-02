@@ -2,10 +2,10 @@ import { Options } from "@contentful/rich-text-react-renderer"
 import { BLOCKS, INLINES, Node } from "@contentful/rich-text-types"
 import { inlinesBase, marksBase, nodesBase } from "@/components/rich-text/base"
 import {
-  RichTextAssetRecipe,
-  RichTextBlockRecipe,
-  RichTextHyperlinkRecipe,
-  RichTextLinksRecipe,
+  RichTextAsset,
+  RichTextBlock,
+  RichTextHyperlink,
+  RichTextLinks,
 } from "@/lib/types/rich-text-links"
 import Link from "@/components/link"
 import NextLink from "next/link"
@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button"
 import { TypographyBlockquote, TypographySmall } from "../typography"
 import Image from "next/image"
 
-export const options = (links: RichTextLinksRecipe): Options => {
+export const options = (links: RichTextLinks): Options => {
   const assetMap = new Map()
   const entryMap = new Map()
   const hyperlinkMap = new Map()
@@ -36,7 +36,7 @@ export const options = (links: RichTextLinksRecipe): Options => {
       ...inlinesBase,
       ...nodesBase,
       [BLOCKS.EMBEDDED_ENTRY]: (node: Node) => {
-        const entry: RichTextBlockRecipe = entryMap.get(node.data.target.sys.id)
+        const entry: RichTextBlock = entryMap.get(node.data.target.sys.id)
 
         if (
           entry.__typename === "LinkUrl" ||
@@ -65,7 +65,7 @@ export const options = (links: RichTextLinksRecipe): Options => {
         }
       },
       [INLINES.ENTRY_HYPERLINK]: (node: Node, children: React.ReactNode) => {
-        const hyperlink: RichTextHyperlinkRecipe = hyperlinkMap.get(
+        const hyperlink: RichTextHyperlink = hyperlinkMap.get(
           node.data.target.sys.id
         )
 
@@ -93,7 +93,7 @@ export const options = (links: RichTextLinksRecipe): Options => {
         }
       },
       [BLOCKS.EMBEDDED_ASSET]: (node: Node, next: React.ReactNode) => {
-        const asset: RichTextAssetRecipe = assetMap.get(node.data.target.sys.id)
+        const asset: RichTextAsset = assetMap.get(node.data.target.sys.id)
 
         switch (asset.contentType) {
           case "image/png":
