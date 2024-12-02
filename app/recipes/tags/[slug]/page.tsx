@@ -1,5 +1,5 @@
-import PaginationController from "@/components/paginationController"
-import RecipeGrid from "@/components/recipeGrid"
+import PaginationController from "@/components/pagination-controller"
+import RecipeGrid from "@/components/recipe-grid"
 import { TypographyH1 } from "@/components/typography"
 import { getRecipesByTagSlug, getRecipeTagSlugs } from "@/lib/queries/recipes"
 import { draftMode } from "next/headers"
