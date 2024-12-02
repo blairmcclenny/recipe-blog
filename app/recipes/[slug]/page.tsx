@@ -2,7 +2,7 @@ import { getRecipeBySlug, getRecipeSlugs } from "@/lib/queries/recipes"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
 import { TypographyH1, TypographyP } from "@/components/typography"
-import renderRichText, { recipeOptions } from "@/components/rich-text"
+import renderRichText, { richTextOptions } from "@/components/rich-text"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 
@@ -43,7 +43,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <div>
         {renderRichText(
           recipe.details.json,
-          recipeOptions(recipe.details.links)
+          richTextOptions(recipe.details.links)
         )}
       </div>
       <div className="flex flex-wrap gap-1">
