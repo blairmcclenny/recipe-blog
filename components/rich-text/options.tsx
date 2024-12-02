@@ -103,6 +103,7 @@ export const options = (links: RichTextLinks): Options => {
                 width={asset.width}
                 height={asset.height}
                 alt={asset.description}
+                className="rounded-lg"
               />
             )
           default:
