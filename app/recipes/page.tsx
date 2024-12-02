@@ -2,8 +2,8 @@ import { getRecipes } from "@/lib/queries/recipes"
 import { notFound } from "next/navigation"
 import { draftMode } from "next/headers"
 import { TypographyH1 } from "@/components/typography"
-import RecipeGrid from "@/components/recipeGrid"
-import PaginationController from "@/components/paginationController"
+import RecipeGrid from "@/components/recipe-grid"
+import PaginationController from "@/components/pagination-controller"
 
 export default async function Page({
   searchParams,
