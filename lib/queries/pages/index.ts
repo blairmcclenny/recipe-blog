@@ -1,5 +1,11 @@
 import { fetchGraphQL } from "@/lib/api"
 import { Pages, PageSlugs } from "@/lib/types/pages"
+import {
+  linkAnchorFields,
+  linkContentFields,
+  linkIndexPageFields,
+  linkUrlFields,
+} from "@/lib/queries/navigation/fragments"
 
 export async function getPageSlugs(isDraftMode = false) {
   const query = `#graphql
@@ -53,11 +59,60 @@ export async function getPages({
           }
           details {
             json
+            links {
+              assets {
+                block {
+                  sys {
+                    id
+                  }
+                  description
+                  contentType
+                  url
+                  width
+                  height
+                }
+              }
+              entries {
+                hyperlink {
+                  __typename
+                  sys {
+                    id
+                  }
+                  ... on Recipe {
+                    slug
+                  }
+                  ... on Page {
+                    slug
+                  }
+                  ... on Event {
+                    slug
+                  }
+                }
+                block {
+                  ...linkUrlFields
+                  ...linkAnchorFields
+                  ...linkContentFields
+                  ...linkIndexPageFields
+                  ... on Quote {
+                    __typename
+                    sys {
+                      id
+                    }
+                    quote
+                    citation
+                  }
+                }
+              }
+            }
           }
           summary
         }
       }
     }
+    ${linkUrlFields}
+    ${linkAnchorFields}
+    ${linkContentFields}
+    ${linkIndexPageFields}
   `
 
   const data = await fetchGraphQL<Pages>({
