@@ -5,13 +5,14 @@ import { TypographyH1 } from "@/components/typography"
 import RecipeGrid from "@/components/recipe-grid"
 import PaginationController from "@/components/pagination-controller"
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: { page?: number }
-}) {
+export default async function Page(
+  props: {
+    searchParams: Promise<{ page?: number }>
+  }
+) {
+  const searchParams = await props.searchParams;
   const { page } = searchParams
-  const { isEnabled } = draftMode()
+  const { isEnabled } = await draftMode()
 
   const limit = 20
   const skip = page ? (page - 1) * limit : 0

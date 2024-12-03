@@ -4,7 +4,7 @@ import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
 
 export default async function Home() {
-  const { isEnabled } = draftMode()
+  const { isEnabled } = await draftMode()
 
   const data = await getPages({
     limit: 1,

@@ -102,7 +102,7 @@ export const options = (links: RichTextLinks): Options => {
                 src={asset.url}
                 width={asset.width}
                 height={asset.height}
-                alt={asset.description}
+                alt={asset.description || ""}
                 className="rounded-lg"
               />
             )
