@@ -1,4 +1,5 @@
 import { Document } from "@contentful/rich-text-types"
+import { RichTextLinks } from "@/lib/types/rich-text-links"
 
 export type PageSlugs = {
   pageCollection: {
@@ -21,6 +22,7 @@ export type Pages = {
       }
       details: {
         json: Document
+        links: RichTextLinks
       }
       summary: string
     }[]

@@ -1,4 +1,4 @@
-import renderRichText from "@/components/rich-text"
+import renderRichText, { richTextOptions } from "@/components/rich-text"
 import { getPages } from "@/lib/queries/pages"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
@@ -19,7 +19,7 @@ export default async function Home() {
 
   return (
     <div className="container mx-auto px-4 max-w-4xl">
-      {renderRichText(page.details.json)}
+      {renderRichText(page.details.json, richTextOptions(page.details.links))}
     </div>
   )
 }
