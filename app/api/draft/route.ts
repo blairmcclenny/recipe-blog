@@ -22,6 +22,6 @@ export async function GET(request: Request) {
     return new Response("Recipe not found", { status: 404 })
   }
 
-  draftMode().enable()
+  (await draftMode()).enable()
   redirect(`/recipes/${recipe.slug}`)
 }

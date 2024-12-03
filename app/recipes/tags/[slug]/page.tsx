@@ -14,16 +14,17 @@ export async function generateStaticParams() {
   }))
 }
 
-export default async function Page({
-  params,
-  searchParams,
-}: {
-  params: { slug: string }
-  searchParams: { page?: number }
-}) {
+export default async function Page(
+  props: {
+    params: Promise<{ slug: string }>
+    searchParams: Promise<{ page?: number }>
+  }
+) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const { slug } = params
   const { page } = searchParams
-  const { isEnabled } = draftMode()
+  const { isEnabled } = await draftMode()
 
   const limit = 20
   const skip = page ? (page - 1) * limit : 0

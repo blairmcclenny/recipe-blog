@@ -3,7 +3,7 @@ import { draftMode } from "next/headers"
 import { FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa6"
 
 export default async function SocialMedia() {
-  const { isEnabled } = draftMode()
+  const { isEnabled } = await draftMode()
 
   const data = await getSocialMedia({
     limit: 1,
