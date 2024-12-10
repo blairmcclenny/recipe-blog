@@ -34,9 +34,11 @@ function getEntryPath(entry: LinkContentEntry) {
 
 export default function Link({
   link,
+  className,
   ...props
 }: {
   link: LinkAnchor & LinkUrl & LinkContent & LinkIndexPage
+  className?: string
   children: React.ReactNode
 }) {
   switch (link.__typename) {
@@ -46,16 +48,33 @@ export default function Link({
           href={link.linkUrl}
           target="_blank"
           rel="noopener noreferrer"
+          className={className}
           {...props}
         />
       )
     case "LinkAnchor":
       return (
-        <a href={`#${convertStringToHtmlId(link.linkAnchor)}`} {...props} />
+        <a
+          href={`#${convertStringToHtmlId(link.linkAnchor)}`}
+          className={className}
+          {...props}
+        />
       )
     case "LinkContent":
-      return <NextLink href={getEntryPath(link.linkContent)} {...props} />
+      return (
+        <NextLink
+          href={getEntryPath(link.linkContent)}
+          className={className}
+          {...props}
+        />
+      )
     case "LinkIndexPage":
-      return <NextLink href={getIndexPagePath(link.linkIndexPage)} {...props} />
+      return (
+        <NextLink
+          href={getIndexPagePath(link.linkIndexPage)}
+          className={className}
+          {...props}
+        />
+      )
   }
 }
