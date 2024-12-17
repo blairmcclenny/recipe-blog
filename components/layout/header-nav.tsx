@@ -66,7 +66,8 @@ export default function HeaderNav({
         <div className="container mx-auto px-4 h-full flex items-center justify-between">
           <NextLink
             href="/"
-            className="font-serif font-extrabold text-2xl md:text-3xl"
+            className="font-serif font-extrabold text-2xl md:text-3xl leading-none"
+            onClick={() => setIsMobileMenuOpen(false)}
           >
             Lorem Ipsum
           </NextLink>
@@ -85,13 +86,11 @@ export default function HeaderNav({
             </ul>
           </nav>
           {isMobile && (
-            <Button
-              variant="ghost"
-              className="md:hidden"
-              onClick={toggleMobileMenu}
-            >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </Button>
+            <div onClick={toggleMobileMenu}>
+              <i className="relative h-0.5 bg-foreground block w-5" />
+              <i className="relative h-0.5 bg-foreground block w-5 mt-1" />
+              <i className="relative h-0.5 bg-foreground block w-5 mt-1" />
+            </div>
           )}
         </div>
       </header>
@@ -99,7 +98,7 @@ export default function HeaderNav({
         <div
           ref={container}
           className={cn(
-            "fixed inset-0 top-16 md:top-24 z-40 md:hidden",
+            "fixed inset-0 top-16 md:top-24 z-40",
             !isMobileMenuOpen && "pointer-events-none"
           )}
         >
