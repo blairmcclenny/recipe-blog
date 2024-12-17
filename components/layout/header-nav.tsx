@@ -71,10 +71,10 @@ export default function HeaderNav({
           <nav className="hidden md:block">
             <ul className="flex space-x-4">
               {links?.map((link) => (
-                <li key={link.sys.id} className="relative">
+                <li key={link.sys.id}>
                   <Link
                     link={link}
-                    className="text-muted-foreground [&.active]:text-foreground hover:text-foreground transition-color p-bottom-0.5 before:absolute before:left-0 before:w-full before:bg-current before:h-px before:-bottom-0.5 before:transition before:origin-right hover:before:origin-left hover:before:scale-x-100 [&.active]:before:scale-x-100 before:scale-x-0"
+                    className="relative text-muted-foreground [&.active]:text-foreground hover:text-foreground transition-color p-bottom-0.5 before:absolute before:left-0 before:w-full before:bg-current before:h-px before:-bottom-0.5 before:transition before:origin-right hover:before:origin-left hover:before:scale-x-100 [&.active]:before:scale-x-100 before:scale-x-0"
                   >
                     {link.linkText}
                   </Link>
@@ -96,18 +96,21 @@ export default function HeaderNav({
       {isMobile && (
         <div
           ref={container}
-          className="fixed inset-0 top-16 md:top-24 z-40 bg-slate-50 md:hidden"
+          className="fixed inset-0 top-16 md:top-24 z-40 md:hidden bg-background"
         >
-          <nav className="mobile-nav h-full flex flex-col items-center justify-center space-y-8">
-            <Button variant="ghost" size="lg" onClick={toggleMobileMenu}>
-              Home
-            </Button>
-            <Button variant="ghost" size="lg" onClick={toggleMobileMenu}>
-              About
-            </Button>
-            <Button variant="ghost" size="lg" onClick={toggleMobileMenu}>
-              Contact
-            </Button>
+          <nav className="mobile-nav h-full">
+            <ul className="flex flex-col items-center justify-center h-full gap-8">
+              {links?.map((link) => (
+                <li key={link.sys.id}>
+                  <Link
+                    link={link}
+                    className="relative w-fit text-muted-foreground [&.active]:text-foreground before:absolute before:w-full before:bg-current before:h-px before:-bottom-0.5 [&.active]:before:scale-x-100 before:scale-x-0"
+                  >
+                    {link.linkText}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </nav>
         </div>
       )}
