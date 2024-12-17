@@ -1,6 +1,5 @@
 "use client"
 
-// TODO: Add transition to mobile nav
 // TODO: Add transition to mobile nav icon
 
 import { useState, useEffect, useRef } from "react"
@@ -21,6 +20,9 @@ import {
 } from "@/lib/types/navigation"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
+import { cn } from "@/lib/utils"
+
+gsap.registerPlugin(useGSAP)
 
 export default function HeaderNav({
   links,
@@ -33,6 +35,8 @@ export default function HeaderNav({
 
   useBodyScrollLock(isMobileMenuOpen)
 
+  const container = useRef(null)
+
   useEffect(() => {
     if (!isMobile) {
       setIsMobileMenuOpen(false)
@@ -43,19 +47,17 @@ export default function HeaderNav({
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
 
-  gsap.registerPlugin(useGSAP)
-
-  const container = useRef(null)
-
   useGSAP(
     () => {
+      if (!container.current) return
+
       gsap.to(".mobile-nav", {
-        duration: 10,
-        opacity: 1,
+        duration: 0.25,
+        opacity: isMobileMenuOpen ? 1 : 0,
         ease: "power2.inOut",
       })
     },
-    { scope: container }
+    { dependencies: [isMobileMenuOpen], scope: container }
   )
 
   return (
@@ -96,12 +98,18 @@ export default function HeaderNav({
       {isMobile && (
         <div
           ref={container}
-          className="fixed inset-0 top-16 md:top-24 z-40 md:hidden bg-background"
+          className={cn(
+            "fixed inset-0 top-16 md:top-24 z-40 md:hidden",
+            !isMobileMenuOpen && "pointer-events-none"
+          )}
         >
-          <nav className="mobile-nav h-full">
+          <nav className="h-full bg-background mobile-nav opacity-0">
             <ul className="flex flex-col items-center justify-center h-full gap-8">
               {links?.map((link) => (
-                <li key={link.sys.id}>
+                <li
+                  key={link.sys.id}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
                   <Link
                     link={link}
                     className="relative w-fit text-muted-foreground [&.active]:text-foreground before:absolute before:w-full before:bg-current before:h-px before:-bottom-0.5 [&.active]:before:scale-x-100 before:scale-x-0"
