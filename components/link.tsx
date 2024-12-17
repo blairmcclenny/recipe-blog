@@ -1,6 +1,8 @@
+"use client"
+
 import React from "react"
 import NextLink from "next/link"
-import { convertStringToHtmlId } from "@/lib/utils"
+import { cn, convertStringToHtmlId } from "@/lib/utils"
 import {
   LinkAnchor,
   LinkContent,
@@ -9,6 +11,7 @@ import {
   LinkIndexPageType,
   LinkUrl,
 } from "@/lib/types/navigation"
+import { usePathname } from "next/navigation"
 
 const indexPagePathMap = {
   Recipes: "/recipes",
@@ -34,11 +37,15 @@ function getEntryPath(entry: LinkContentEntry) {
 
 export default function Link({
   link,
+  className,
   ...props
 }: {
   link: LinkAnchor & LinkUrl & LinkContent & LinkIndexPage
+  className?: string
   children: React.ReactNode
 }) {
+  const pathname = usePathname()
+
   switch (link.__typename) {
     case "LinkUrl":
       return (
@@ -46,16 +53,41 @@ export default function Link({
           href={link.linkUrl}
           target="_blank"
           rel="noopener noreferrer"
+          className={className}
           {...props}
         />
       )
     case "LinkAnchor":
       return (
-        <a href={`#${convertStringToHtmlId(link.linkAnchor)}`} {...props} />
+        <a
+          href={`#${convertStringToHtmlId(link.linkAnchor)}`}
+          className={className}
+          {...props}
+        />
       )
     case "LinkContent":
-      return <NextLink href={getEntryPath(link.linkContent)} {...props} />
+      return (
+        <NextLink
+          href={getEntryPath(link.linkContent)}
+          className={cn(
+            className,
+            getEntryPath(link.linkContent) === pathname &&
+              "active pointer-events-none"
+          )}
+          {...props}
+        />
+      )
     case "LinkIndexPage":
-      return <NextLink href={getIndexPagePath(link.linkIndexPage)} {...props} />
+      return (
+        <NextLink
+          href={getIndexPagePath(link.linkIndexPage)}
+          className={cn(
+            className,
+            getIndexPagePath(link.linkIndexPage) === pathname &&
+              "active pointer-events-none"
+          )}
+          {...props}
+        />
+      )
   }
 }
