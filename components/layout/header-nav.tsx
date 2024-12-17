@@ -71,7 +71,7 @@ export default function HeaderNav({
             Lorem Ipsum
           </NextLink>
           <nav className="hidden md:block">
-            <ul className="flex space-x-4">
+            <ul className="flex space-x-4 font-semibold">
               {links?.map((link) => (
                 <li key={link.sys.id}>
                   <Link
@@ -104,7 +104,7 @@ export default function HeaderNav({
           )}
         >
           <nav className="h-full bg-background mobile-nav opacity-0">
-            <ul className="flex flex-col items-center justify-center h-full gap-8">
+            <ul className="flex flex-col items-center justify-center h-full gap-8 font-semibold">
               {links?.map((link) => (
                 <li
                   key={link.sys.id}
