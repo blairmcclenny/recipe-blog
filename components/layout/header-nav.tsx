@@ -1,10 +1,6 @@
 "use client"
 
-// TODO: Add transition to mobile nav icon
-
 import { useState, useEffect, useRef } from "react"
-import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
 
 import useBodyScrollLock from "@/hooks/use-body-lock-scroll"
 import useWindowScroll from "@/hooks/use-window-scroll"
@@ -35,7 +31,9 @@ export default function HeaderNav({
 
   useBodyScrollLock(isMobileMenuOpen)
 
-  const container = useRef(null)
+  const containerHamburger = useRef(null)
+  const containerMobileNav = useRef(null)
+  const tl = useRef<gsap.core.Timeline | null>(null)
 
   useEffect(() => {
     if (!isMobile) {
@@ -43,31 +41,85 @@ export default function HeaderNav({
     }
   }, [isMobile])
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen)
-  }
-
   useGSAP(
     () => {
-      if (!container.current) return
-
       gsap.to(".mobile-nav", {
         duration: 0.25,
         opacity: isMobileMenuOpen ? 1 : 0,
         ease: "power2.inOut",
       })
     },
-    { dependencies: [isMobileMenuOpen], scope: container }
+    {
+      dependencies: [isMobileMenuOpen],
+      scope: containerMobileNav,
+    }
   )
+
+  useGSAP(
+    () => {
+      tl.current = gsap.timeline({
+        paused: true,
+        reversed: true,
+        defaults: {
+          duration: 0.25,
+          ease: "power2.inOut",
+        },
+      })
+
+      tl.current
+        .to("i", {
+          scaleX: (i) => (i === 1 ? 0 : 1),
+          y: (i) => {
+            switch (i) {
+              case 0:
+                return 6
+              case 2:
+                return -6
+              default:
+                return 0
+            }
+          },
+          rotate: 0,
+        })
+        .to("i", {
+          rotate: (i) => {
+            switch (i) {
+              case 0:
+                return 45
+              case 2:
+                return -45
+              default:
+                return 0
+            }
+          },
+        })
+    },
+    { dependencies: [tl], scope: containerHamburger }
+  )
+
+  useGSAP(() => {
+    if (!tl.current) return
+
+    tl.current.reversed(!isMobileMenuOpen)
+    tl.current.paused(false)
+  }, [tl, isMobileMenuOpen])
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false)
+  }
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen)
+  }
 
   return (
     <>
       <header className="sticky top-0 left-0 right-0 z-50 bg-background h-16 md:h-24">
-        <div className="container mx-auto px-4 h-full flex items-center justify-between">
+        <div className="containerMobileNav mx-auto px-4 h-full flex items-center justify-between">
           <NextLink
             href="/"
             className="font-serif font-extrabold text-2xl md:text-3xl leading-none"
-            onClick={() => setIsMobileMenuOpen(false)}
+            onClick={closeMobileMenu}
           >
             Lorem Ipsum
           </NextLink>
@@ -85,42 +137,39 @@ export default function HeaderNav({
               ))}
             </ul>
           </nav>
-          {isMobile && (
-            <div onClick={toggleMobileMenu}>
-              <i className="relative h-0.5 bg-foreground block w-5" />
-              <i className="relative h-0.5 bg-foreground block w-5 mt-1" />
-              <i className="relative h-0.5 bg-foreground block w-5 mt-1" />
-            </div>
-          )}
+          <div
+            ref={containerHamburger}
+            onClick={toggleMobileMenu}
+            className="md:hidden cursor-pointer"
+          >
+            <i className="relative h-0.5 bg-foreground block w-5" />
+            <i className="relative h-0.5 bg-foreground block w-5 mt-1" />
+            <i className="relative h-0.5 bg-foreground block w-5 mt-1" />
+          </div>
         </div>
       </header>
-      {isMobile && (
-        <div
-          ref={container}
-          className={cn(
-            "fixed inset-0 top-16 md:top-24 z-40",
-            !isMobileMenuOpen && "pointer-events-none"
-          )}
-        >
-          <nav className="h-full bg-background mobile-nav opacity-0">
-            <ul className="flex flex-col items-center justify-center h-full gap-8 font-semibold">
-              {links?.map((link) => (
-                <li
-                  key={link.sys.id}
-                  onClick={() => setIsMobileMenuOpen(false)}
+      <div
+        ref={containerMobileNav}
+        className={cn(
+          "fixed inset-0 top-16 md:top-24 z-40 md:hidden",
+          !isMobileMenuOpen && "pointer-events-none"
+        )}
+      >
+        <nav className="h-full bg-background mobile-nav opacity-0">
+          <ul className="flex flex-col items-center justify-center h-full gap-8 font-semibold">
+            {links?.map((link) => (
+              <li key={link.sys.id} onClick={closeMobileMenu}>
+                <Link
+                  link={link}
+                  className="relative w-fit text-muted-foreground [&.active]:text-foreground before:absolute before:w-full before:bg-current before:h-px before:-bottom-0.5 [&.active]:before:scale-x-100 before:scale-x-0"
                 >
-                  <Link
-                    link={link}
-                    className="relative w-fit text-muted-foreground [&.active]:text-foreground before:absolute before:w-full before:bg-current before:h-px before:-bottom-0.5 [&.active]:before:scale-x-100 before:scale-x-0"
-                  >
-                    {link.linkText}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      )}
+                  {link.linkText}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
     </>
   )
 }
