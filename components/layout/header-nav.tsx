@@ -59,7 +59,6 @@ export default function HeaderNav({
     () => {
       tl.current = gsap.timeline({
         paused: true,
-        reversed: true,
         defaults: {
           duration: 0.25,
           ease: "power2.inOut",
