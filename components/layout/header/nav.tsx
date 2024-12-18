@@ -114,7 +114,7 @@ export default function HeaderNav({
   return (
     <>
       <header className="sticky top-0 left-0 right-0 z-50 bg-background h-16 md:h-24">
-        <div className="containerMobileNav mx-auto px-4 h-full flex items-center justify-between">
+        <div className="container mx-auto px-4 h-full flex items-center justify-between">
           <NextLink
             href="/"
             className="font-serif font-extrabold text-2xl md:text-3xl leading-none"
