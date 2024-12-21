@@ -24,7 +24,7 @@ export default async function Footer() {
         </nav>
         <SocialMedia />
         <p className="text-center text-sm text-muted-foreground">
-          &copy; <Copyright /> Lorem Ipsum
+          &copy; <Copyright /> Savor and Spice
         </p>
       </div>
     </footer>
