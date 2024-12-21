@@ -120,7 +120,7 @@ export default function HeaderNav({
             className="font-serif font-extrabold text-2xl md:text-3xl leading-none"
             onClick={closeMobileMenu}
           >
-            Lorem Ipsum
+            Savor and Spice
           </NextLink>
           <nav className="hidden md:block">
             <ul className="flex space-x-4 font-semibold">
