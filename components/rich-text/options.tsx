@@ -56,10 +56,14 @@ export const options = (links: RichTextLinks): Options => {
         if (entry.__typename === "Quote") {
           return (
             <div className="my-6 w-full">
-              <TypographyBlockquote>
-                <p>{entry.quote}</p>
-              </TypographyBlockquote>
-              <TypographySmall>{entry.citation}</TypographySmall>
+              <blockquote>
+                <span className='block -indent-[.45em] mt-6 border-l-2 pl-6 italic [&:before]:content-[open-quote] [&:after]:content-[close-quote] [quotes:"“"_"”"_"‘"_"’"]'>
+                  {entry.quote}
+                </span>
+                <cite className="block mt-2 pl-6 text-sm text-muted-foreground">
+                  - {entry.citation}
+                </cite>
+              </blockquote>
             </div>
           )
         }
