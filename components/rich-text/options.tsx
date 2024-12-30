@@ -45,7 +45,7 @@ export const options = (links: RichTextLinks): Options => {
           entry.__typename === "LinkIndexPage"
         ) {
           return (
-            <div className="my-6 w-full">
+            <div className="my-6 w-full text-center">
               <Button asChild>
                 <Link link={entry}>{entry.linkText}</Link>
               </Button>
