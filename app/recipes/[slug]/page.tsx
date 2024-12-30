@@ -1,7 +1,7 @@
 import { getRecipeBySlug, getRecipeSlugs } from "@/lib/queries/recipes"
 import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
-import { TypographyH1, TypographyP } from "@/components/typography"
+import { TypographyH1, TypographyMuted } from "@/components/typography"
 import renderRichText, { richTextOptions } from "@/components/rich-text"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
@@ -15,8 +15,10 @@ export async function generateStaticParams() {
   }))
 }
 
-export default async function Page(props: { params: Promise<{ slug: string }> }) {
-  const params = await props.params;
+export default async function Page(props: {
+  params: Promise<{ slug: string }>
+}) {
+  const params = await props.params
   const { isEnabled } = await draftMode()
 
   const data = await getRecipeBySlug({
@@ -32,15 +34,14 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
   return (
     <div className="container mx-auto px-4 max-w-4xl">
       <TypographyH1>{recipe.title}</TypographyH1>
-      <TypographyP>{recipe.summary}</TypographyP>
-      <div>
+      <TypographyMuted>
         {recipe.date &&
           new Date(recipe.date).toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",
             day: "numeric",
           })}
-      </div>
+      </TypographyMuted>
       <div>
         {renderRichText(
           recipe.details.json,
