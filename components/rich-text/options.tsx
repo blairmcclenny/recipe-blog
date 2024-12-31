@@ -45,7 +45,7 @@ export const options = (links: RichTextLinks): Options => {
           entry.__typename === "LinkIndexPage"
         ) {
           return (
-            <div className="my-6 w-full text-center">
+            <div className="[&:not(:first-child)]:mt-6 w-full text-center">
               <Button asChild>
                 <Link link={entry}>{entry.linkText}</Link>
               </Button>
@@ -107,7 +107,7 @@ export const options = (links: RichTextLinks): Options => {
                 width={asset.width}
                 height={asset.height}
                 alt={asset.description || ""}
-                className="rounded-lg"
+                className="rounded-lg [&:not(:first-child)]:mt-6"
               />
             )
           default:

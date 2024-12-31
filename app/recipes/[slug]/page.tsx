@@ -42,7 +42,7 @@ export default async function Page(props: {
             day: "numeric",
           })}
       </TypographyMuted>
-      <div>
+      <div className="mt-12">
         {renderRichText(
           recipe.details.json,
           richTextOptions(recipe.details.links)

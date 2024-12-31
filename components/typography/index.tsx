@@ -4,7 +4,7 @@ export function TypographyH1({
   children: React.ReactNode
 }>) {
   return (
-    <h1 className="scroll-m-20 text-4xl font-bold tracking-tight lg:text-5xl">
+    <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
       {children}
     </h1>
   )
@@ -16,7 +16,7 @@ export function TypographyH2({
   children: React.ReactNode
 }>) {
   return (
-    <h2 className="mt-10 scroll-m-20 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+    <h2 className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
       {children}
     </h2>
   )
@@ -28,7 +28,7 @@ export function TypographyH3({
   children: React.ReactNode
 }>) {
   return (
-    <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+    <h3 className="mt-8 scroll-m-20 text-2xl font-semibold tracking-tight">
       {children}
     </h3>
   )
@@ -211,5 +211,5 @@ export function TypographyMuted({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return <p className="text-sm text-muted-foreground">{children}</p>
+  return <p className="text-sm text-muted-foreground [&:not(:first-child)]:mt-2">{children}</p>
 }

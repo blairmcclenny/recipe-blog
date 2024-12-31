@@ -34,7 +34,7 @@ export default function RecipeGrid({
   }
 
   return (
-    <div className="@container">
+    <div className="@container mt-6">
       <div className="grid @lg:grid-cols-2 @2xl:grid-cols-3 @5xl:grid-cols-4 gap-6">
         {recipes.map((recipe) => (
           <Card key={recipe.sys.id}>
