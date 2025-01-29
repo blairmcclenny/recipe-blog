@@ -3,11 +3,6 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: "Open Sans", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-serif: "Playfair Display", ui-serif, Georgia, Cambria,
-    "Times New Roman", Times, serif;
-
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
@@ -58,6 +53,13 @@
       height: 0;
     }
   }
+}
+
+@theme inline {
+  --font-sans: var(--font-open-sans), ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: var(--font-playfair-display), ui-serif, Georgia, Cambria,
+    "Times New Roman", Times, serif;
 }
 
 @utility container {
