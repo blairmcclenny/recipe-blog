@@ -51,7 +51,7 @@ export function TypographyP({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return <p className="leading-7 [&:not(:first-child)]:mt-6">{children}</p>
+  return <p className="leading-7 not-first:mt-6">{children}</p>
 }
 
 export function TypographyBlockquote({
@@ -211,5 +211,5 @@ export function TypographyMuted({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return <p className="text-sm text-muted-foreground [&:not(:first-child)]:mt-2">{children}</p>
+  return <p className="text-sm text-muted-foreground not-first:mt-2">{children}</p>
 }
