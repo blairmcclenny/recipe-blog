@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { Open_Sans, Playfair_Display } from "next/font/google"
 import "./globals.css"
-import { cn } from "@/lib/utils"
+// import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 import Header from "@/components/layout/header"
@@ -35,11 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={cn(
-          "min-h-screen bg-background text-foreground font-sans antialiased",
-          playfair_display.variable,
-          open_sans.variable
-        )}
+        className={`min-h-screen bg-background text-foreground font-sans antialiased ${playfair_display.variable} ${open_sans.variable}`}
       >
         <ThemeProvider
           attribute="class"
