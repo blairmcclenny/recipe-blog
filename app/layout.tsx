@@ -36,9 +36,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-background text-foreground font-sans antialiased",
-          playfair_display.variable,
-          open_sans.variable
+          "min-h-screen bg-background text-foreground font-sans antialiased"
         )}
       >
         <ThemeProvider
